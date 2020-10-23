@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
     "baseUrl": ".",
     "types": [
       "webpack-env"
@@ -17,6 +18,15 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "_c/*": [
+        "src/components/*"
+      ],
+      "_pi/*": [
+        "src/pages/index/*"
+      ],
+      "_piv/*": [
+        "src/pages/index/views/*"
       ]
     },
     "lib": [
