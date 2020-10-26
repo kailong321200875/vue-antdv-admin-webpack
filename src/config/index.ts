@@ -1,9 +1,9 @@
 /**
  * 全局配置
  */
-import { configOptions } from '@/types/config'
+import { ConfigOptions } from '@/types/config'
 
-const config: configOptions = {
+const config: ConfigOptions = {
   /**
    * 配置显示在浏览器标签的title
    */

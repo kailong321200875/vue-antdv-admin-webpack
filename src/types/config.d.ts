@@ -1,7 +1,7 @@
 /**
  * 全局配置
  */
-export interface configOptions {
+export interface ConfigOptions {
   title: string
   el_size: string
   el_zIndex: number

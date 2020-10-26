@@ -9,8 +9,14 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strictFunctionTypes": false,
+    "allowJs": true,
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "types": [
       "webpack-env"

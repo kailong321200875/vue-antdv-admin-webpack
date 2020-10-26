@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-var pages_config_1 = require("./src/config/pages.config");
+var pages_config_1 = require("./pages.config");
 var path = require("path");
 var glob = require("glob");
 // gzip压缩

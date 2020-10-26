@@ -1,4 +1,4 @@
-import pagesConfig from './src/config/pages.config'
+import pagesConfig from './pages.config'
 
 import { ProjectOptions } from '@vue/cli-service'
 
@@ -12,9 +12,9 @@ import * as CompressionWebpackPlugin from 'compression-webpack-plugin'
 // 代码压缩
 import * as TerserPlugin from 'terser-webpack-plugin'
 
-import { entryItemModule, pageItemModule } from './src/types/vue.config'
+import { EntryItemModule, PageItemModule } from './src/types/vue.config'
 
-import { emptyObj } from './src/types/glob'
+import { EmptyObj } from './src/types/glob'
 
 const projectName: string | undefined = process.env.PROJECT_NAME // 获取package.json中scripts配置的变量
 
@@ -22,15 +22,15 @@ function resolve(dir: string): string {
   return path.join(__dirname, dir)
 }
 
-const pages: emptyObj = {}
+const pages: EmptyObj = {}
 
-let entryPages: emptyObj = {}
+let entryPages: EmptyObj = {}
 
 glob.sync('./src/pages/**/main.ts').forEach((entry: string) => {
   const chunk: string = entry.match(/\.\/src\/pages\/(.*)\/main\.ts/)[1]
-  const curr: pageItemModule = pagesConfig[chunk]
+  const curr: PageItemModule = pagesConfig[chunk]
   if (curr) {
-    const pageItem: entryItemModule = {
+    const pageItem: EntryItemModule = {
       entry,
       ...curr,
       chunks: process.env.NODE_ENV === 'production'

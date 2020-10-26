@@ -1,10 +1,10 @@
-import { emptyObj } from '@/types/glob'
+import { EmptyObj } from '@/types/glob'
 
 const modulesFiles: any = require.context('./modules', true, /\.ts$/)
 
-const modules: emptyObj = modulesFiles.keys().reduce((modules: emptyObj, modulePath: string): Object => {
+const modules: EmptyObj = modulesFiles.keys().reduce((modules: EmptyObj, modulePath: string): Object => {
   const moduleName: string = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
-  const value: emptyObj = modulesFiles(modulePath)
+  const value: EmptyObj = modulesFiles(modulePath)
   modules[moduleName] = value.default
   return modules
 }, {})

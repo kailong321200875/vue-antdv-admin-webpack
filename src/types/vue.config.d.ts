@@ -1,15 +1,16 @@
 // 多页模版子接口
-export interface pageItemModule {
-  template: string
+export interface PageItemModule {
+  template: string,
+  title?: string
 }
 
 // 多页模版接口
-export interface pagesModule {
-  [key: string]: pageItemModule
+export interface PagesModule {
+  [key: string]: PageItemModule
 }
 
 // 多页入口模版子接口
-export interface entryItemModule extends pageItemModule {
+export interface EntryItemModule extends PageItemModule {
   entry: string,
   chunks: string[]
 }

@@ -2,9 +2,9 @@ import { get } from '@/axios-config/axios'
 
 import { AxiosPromise } from 'axios'
 
-import { emptyObjFun } from '@/types/glob'
+import { EmptyObjFun } from '@/types/glob'
 
-const methods: emptyObjFun = {
+const methods: EmptyObjFun = {
   getList: function(parmas?: any): AxiosPromise {
     return get(parmas, '/getJoke')
   }

@@ -15,20 +15,23 @@
     />
     <div>{{ inputVal }}</div>
 
-    <div v-for="(item, $index) in listData" :key="index">{{ item.text }},</div>
+    <div v-for="(item, $index) in listData" :key="$index">{{ item.text }},</div>
+    <div>{{ noChange }}</div>
+
+    <svg-icon icon-class="404" class-name="disabled" @click="svgClick" />
+    <svg-icon icon-class="component" class-name="disabled" />
 
   </div>
 </template>
 
 <script lang="ts">
-import { ref, Ref, reactive, getCurrentInstance } from 'vue'
-import { emptyObj } from '@/types/glob'
+import { ref, getCurrentInstance } from 'vue'
 export default {
   setup() {
     const instance: any = getCurrentInstance()
-    const { ctx } = instance
+    const { proxy } = instance
 
-    const inputVal: Ref<string> = ref('')
+    const inputVal = ref<string>('')
 
     const changeInputVal = (): void => {
       inputVal.value = '我是点击事件改变的！'
@@ -38,16 +41,21 @@ export default {
       changeInputVal()
     }
 
-    const listData: emptyObj = reactive([])
+    const listData = ref<any[]>([])
+    const noChange: string = '我是不可改变的'
 
     const getList = async(): Promise<void> => {
-      const res = await ctx.$api.common.getList({
+      const res = await proxy.$api.common.getList({
         page: 1,
         count: 10
       })
       if (res) {
         listData.value = res.result
       }
+    }
+
+    function svgClick(): void {
+      console.log('哈哈哈哈哈')
     }
 
     getList()
@@ -57,7 +65,9 @@ export default {
       changeInputVal,
       inputSearch,
       listData,
-      getList
+      getList,
+      noChange,
+      svgClick
     }
   }
 }

@@ -19,14 +19,24 @@ import router from './router' // 路由
 
 import store from './store' // z状态管理
 
+import wsCache from '@/cache' // web缓存
+
+import './permission'
+
 import api from '_pi/api' // 接口api
 
 import { setupAntd } from '@/libs/antdv'
+
+import { setupSvgIcon } from '@/assets/icons'
 
 const app = createApp(App)
 
 setupAntd(app) // 引入antdv组件
 
+setupSvgIcon(app) // 全局注册svgIcon组件
+
 app.config.globalProperties.$api = api
+
+app.config.globalProperties.$wsCache = wsCache
 
 app.use(store).use(router).mount('#app')
