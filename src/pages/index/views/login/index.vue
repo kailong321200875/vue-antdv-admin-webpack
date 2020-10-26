@@ -1,5 +1,5 @@
 <template>
-  <div class="login-wrap" @keydown.enter="login">
+  <div class="login-wrap">
     <div class="login-con">
       <a-card class="box-card">
         <a-card-meta>
@@ -8,43 +8,53 @@
           </template>
         </a-card-meta>
         <a-form
-          ref="form"
+          ref="loginForm"
           :model="form"
           :rules="rules"
+          class="login-form"
         >
           <a-form-item name="userName">
-            <span class="svg-container">
-              <svg-icon icon-class="user" />
-            </span>
             <a-input
               v-model:value="form.userName"
+              size="large"
               placeholder="请输入账号"
               class="form--input"
-            />
+            >
+              <template #prefix>
+                <span class="svg-container">
+                  <svg-icon icon-class="user" />
+                </span>
+              </template>
+            </a-input>
           </a-form-item>
-          <!-- <a-form-item name="passWord">
-            <span class="svg-container">
-              <svg-icon icon-class="password" />
-            </span>
-            <a-input
+          <a-form-item name="passWord">
+            <a-input-password
               v-model:value="form.passWord"
+              size="large"
+              visibility-toggle
               :minlength="3"
               :maxlength="18"
               placeholder="请输入密码"
-              show-password
               class="form--input"
-            />
-          </a-form-item> -->
-          <!-- <a-form-item>
+            >
+              <template #prefix>
+                <span class="svg-container">
+                  <svg-icon icon-class="password" />
+                </span>
+              </template>
+            </a-input-password>
+          </a-form-item>
+          <a-form-item>
             <a-button
               :loading="loading"
+              size="large"
               type="primary"
               class="login--button"
               @click="login"
             >
               登录
             </a-button>
-          </a-form-item> -->
+          </a-form-item>
         </a-form>
       </a-card>
     </div>
@@ -52,7 +62,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, unref, reactive, getCurrentInstance } from 'vue'
+import { useRouter } from 'vue-router'
 
 interface FormModule {
   userName: string,
@@ -66,6 +77,9 @@ interface rulesModule {
 export default defineComponent({
   name: 'Login',
   setup() {
+    const { proxy } = getCurrentInstance() as any
+    const { push } = useRouter()
+    const loginForm = ref<any>(null)
     const loading = ref<boolean>(false)
     const redirect = ref<string>('')
     const form = reactive<FormModule>({
@@ -73,13 +87,25 @@ export default defineComponent({
       passWord: 'admin'
     })
     const rules = reactive<rulesModule>({
-      userName: [{ required: true, message: '帐号不能为空' }],
-      passWord: [{ required: true, message: '密码不能为空' }]
+      userName: [{ required: true, message: '请输入账号' }],
+      passWord: [{ required: true, message: '请输入密码' }]
     })
-    function login(): void {
-      console.log('哈哈哈哈')
+    async function login(): Promise<void> {
+      const form = unref(loginForm)
+      if (!form) return
+      loading.value = true
+      try {
+        const data: FormModule = await form.validate()
+        proxy.$wsCache.set(proxy.$config.user_info, data)
+        push({ path: redirect.value || '/' })
+      } catch (err) {
+        console.log(err)
+      } finally {
+        loading.value = false 
+      }
     }
     return {
+      loginForm,
       loading,
       redirect,
       form,
@@ -104,6 +130,9 @@ export default defineComponent({
       font-size: 24px;
       font-weight: 600;
     }
+    .login-form {
+      margin-top: 20px;
+    }
     .svg-container {
       color: #889aa4;
       vertical-align: middle;
@@ -111,7 +140,10 @@ export default defineComponent({
       display: inline-block;
     }
     .form--input {
-      width: 85%;
+      width: 100%;
+      ::v-deep .ant-input {
+        padding-left: 35px;
+      }
     }
     .login--button {
       width: 100%;

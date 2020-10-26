@@ -1,9 +1,13 @@
 module.exports = {
   root: true,
-
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 
   env: {
@@ -12,10 +16,14 @@ module.exports = {
     es6: true
   },
 
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+    'eslint:recommended'
+  ],
 
-  // add your custom rules here
-  // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     'vue/max-attributes-per-line': [
       2,
