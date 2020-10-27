@@ -101,7 +101,7 @@ export default defineComponent({
       } catch (err) {
         console.log(err)
       } finally {
-        loading.value = false 
+        loading.value = false
       }
     }
     return {

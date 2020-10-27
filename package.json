@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "tsc vue.config.ts && vue-cli-service serve",
-    "serve:index": "cross-env PROJECT_NAME=index tsc vue.config.ts && vue-cli-service serve",
-    "build:dev": "tsc vue.config.ts && vue-cli-service build --mode development",
-    "build:pro": "tsc vue.config.ts && vue-cli-service build",
-    "build:test": "tsc vue.config.ts && vue-cli-service build --mode test",
+    "serve": "vue-cli-service serve",
+    "serve:index": "cross-env PROJECT_NAME=index vue-cli-service serve",
+    "build:dev": "vue-cli-service build --mode development",
+    "build:pro": "vue-cli-service build",
+    "build:test": "vue-cli-service build --mode test",
     "build:all": "npm run build:dev && npm run build:pro && npm run build:test",
-    "build-dev:index": "cross-env PROJECT_NAME=index tsc vue.config.ts && vue-cli-service build --mode development",
-    "build-test:index": "cross-env PROJECT_NAME=index tsc vue.config.ts && vue-cli-service build --mode test",
-    "build-pro:index": "cross-env PROJECT_NAME=index tsc vue.config.ts && vue-cli-service build",
+    "build-dev:index": "cross-env PROJECT_NAME=index vue-cli-service build --mode development",
+    "build-test:index": "cross-env PROJECT_NAME=index vue-cli-service build --mode test",
+    "build-pro:index": "cross-env PROJECT_NAME=index vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
