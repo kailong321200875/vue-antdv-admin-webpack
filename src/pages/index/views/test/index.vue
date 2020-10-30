@@ -42,7 +42,7 @@ export default {
     }
 
     const listData = ref<any[]>([])
-    const noChange: string = '我是不可改变的'
+    const noChange = '我是不可改变的'
 
     const getList = async(): Promise<void> => {
       const res = await proxy.$api.common.getList({

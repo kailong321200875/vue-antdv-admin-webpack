@@ -1,10 +1,16 @@
 import router from './router'
+
 import NProgress from 'nprogress' // 引入进度条
+
 import 'nprogress/nprogress.css' // 进度条样式
-import config from '@/config'
-const { user_info } = config
+
+import config from './config'
+
+const { user_info, title } = config
+
 import wsCache from '@/cache'
-// import getPageTitle from '@/utils/get-page-title'
+
+import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false })// NProgress configuration
 
@@ -28,7 +34,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach((to, from) => {
-  // document.title = getPageTitle(to.meta.title)
+router.afterEach((to) => {
+  document.title = getPageTitle(to.meta.title, title)
   NProgress.done() // 结束进度条
 })

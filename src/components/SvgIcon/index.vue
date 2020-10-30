@@ -21,7 +21,7 @@ export default defineComponent({
     },
     className: {
       type: String,
-      default: ''
+      default: () => ''
     }
   },
   setup(props: Props) {

@@ -17,21 +17,23 @@ import App from './App.vue' // 入口组件
 
 import router from './router' // 路由
 
-import store from './store' // z状态管理
+import { setupStore } from './store' // 状态管理
 
 import wsCache from '@/cache' // web缓存
 
-import config from '@/config' // 全局配置
+import config from './config' // 全局配置
 
 import './permission' // 路由守卫
 
-import api from '_pi/api' // 接口api
+import api from './api' // 接口api
 
 import { setupAntd } from '@/libs/antdv' // antdv UI
 
 import { setupSvgIcon } from '@/assets/icons' // svg图标
 
 const app = createApp(App)
+
+setupStore(app) // 引入状态管理
 
 setupAntd(app) // 引入antdv组件
 
@@ -43,4 +45,4 @@ app.config.globalProperties.$wsCache = wsCache
 
 app.config.globalProperties.$config = config
 
-app.use(store).use(router).mount('#app')
+app.use(router).mount('#app')

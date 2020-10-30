@@ -7,17 +7,7 @@ const config: ConfigOptions = {
   /**
    * 配置显示在浏览器标签的title
    */
-  title: 'vue-ele-admin',
-
-  /**
-   * 设置ele组件默认尺寸
-   */
-  el_size: 'medium',
-
-  /**
-   * 设置ele组件默认zIndex
-   */
-  el_zIndex: 2000,
+  title: 'vue-antdv-admin',
 
   /**
    * 是否固定头部
@@ -35,9 +25,9 @@ const config: ConfigOptions = {
   show_logo: true,
 
   /**
-   * 是否每次只显示一个并且是最新的message提示
+   * logo标题
    */
-  one_message: true,
+  logo_title: 'vue-antdv-admin',
 
   /**
    * 横纵布局 horizontal(水平) vertical(垂直)
@@ -59,7 +49,7 @@ const config: ConfigOptions = {
   /**
    * 接口成功返回状态码
    */
-  result_code: 200,
+  result_code: 2000,
 
   /**
    * 接口请求超时时间

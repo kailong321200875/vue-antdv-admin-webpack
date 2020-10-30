@@ -47,13 +47,13 @@ const vueConfig = {
   chainWebpack: config => {
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach((type) => addStyleResource(config.module.rule('less').oneOf(type)))
-    
+
     // 防止多页面打包卡顿
     config.plugins.delete('named-chunks')
-    
+
     // 修复HMR
     config.resolve.symlinks(true)
-    
+
     config.resolve.alias
       .set('@', resolve('src'))
       .set('_c', resolve('src/components'))
@@ -61,7 +61,7 @@ const vueConfig = {
       .set('_piv', resolve('src/pages/index/views'))
       // .set('_pd1', resolve('src/pages/demo1'))
       // .set('_pd1v', resolve('src/pages/demo1/views'))
-    
+
     // 设置svg-loader
     config.module
       .rule('svg')
@@ -78,7 +78,7 @@ const vueConfig = {
         symbolId: 'icon-[name]'
       })
       .end()
-    
+
     // 图片压缩
     config.module
       .rule('images')
@@ -88,7 +88,7 @@ const vueConfig = {
         bypassOnDebug: true
       })
       .end()
-      
+
     // 生产环境
     config.when(process.env.NODE_ENV === 'production', config => {
       // gzip压缩
@@ -104,11 +104,11 @@ const vueConfig = {
           minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
           deleteOriginalAssets: false // 删除原文件
         }))
-    
+
       config.plugin('TerserPlugin')
         .use(new TerserPlugin({
           terserOptions: {
-            //生产环境自动删除console
+            // 生产环境自动删除console
             compress: {
               drop_debugger: true,
               drop_console: true,
@@ -118,7 +118,7 @@ const vueConfig = {
           sourceMap: false,
           parallel: true
         }))
-    
+
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after(`html`)
@@ -126,7 +126,7 @@ const vueConfig = {
           inline: /runtime\..*\.js$/
         }])
         .end()
-    
+
       config
         .optimization.splitChunks({
           chunks: 'all',
@@ -151,24 +151,23 @@ const vueConfig = {
             }
           }
         })
-    
+
       config.optimization.runtimeChunk('single')
-    
+
       Object.keys(entryPages).forEach((page) => {
-  
         // 预加载
         config.plugin(`preload-${page}`).tap(() => [{
           rel: 'preload',
           fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
           include: 'initial'
         }])
-    
+
         config.plugins.delete(`prefetch-${page}`)
       })
     })
   },
-  configureWebpack: config => {
-    devtool: process.env.NODE_ENV === 'development' ? 'source-map' : undefined
+  configureWebpack: () => {
+    process.env.NODE_ENV === 'development' ? 'source-map' : undefined
   },
   css: {
     loaderOptions: {

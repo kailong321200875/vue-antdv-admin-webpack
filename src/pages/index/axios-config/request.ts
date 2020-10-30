@@ -1,8 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 
+import { message } from 'ant-design-vue'
+
 import qs from 'qs'
 
-import config from '@/config'
+import config from '../config'
 
 const { result_code, base_url } = config
 
@@ -35,12 +37,12 @@ service.interceptors.response.use(
     if (response.data.code === result_code) {
       return response.data
     } else {
-      alert(response.data.message)
+      message.error(response.data.message)
     }
   },
   (error: AxiosError) => {
     console.log('err' + error) // for debug
-    // one_message ? ResetMessage.error(error.message) : Message.error(error.message)
+    message.error(error.message)
     return Promise.reject(error)
   }
 )
