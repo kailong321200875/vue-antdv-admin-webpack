@@ -8,7 +8,7 @@ import config from '../config'
 
 const { result_code, base_url } = config
 
-export const PATH_URL: string = base_url[process.env.VUE_APP_CURENV]
+export const PATH_URL: string = base_url[process.env.VUE_APP_CURENV as string]
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({

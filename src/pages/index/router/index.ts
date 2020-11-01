@@ -1,4 +1,7 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+import { AppRouteRecordRaw } from '@/types/router'
+import type { App } from 'vue'
 
 /* Layout */
 import Layout from '../views/layout/index.vue'
@@ -22,14 +25,15 @@ import Layout from '../views/layout/index.vue'
   }
 **/
 
-export const constantRouterMap: any[] = [
+export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/redirect',
     component: Layout,
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('_c/Redirect/index.vue')
+        component: () => import('_c/Redirect/index.vue'),
+        meta: {}
       }
     ],
     meta: {
@@ -48,6 +52,7 @@ export const constantRouterMap: any[] = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: {},
     children: [
       {
         path: 'dashboard',
@@ -65,6 +70,7 @@ export const constantRouterMap: any[] = [
   {
     path: '/external-link',
     component: Layout,
+    meta: {},
     children: [
       {
         path: 'http://192.168.169.57/ue/2019/doc/vue-standard/dist/',
@@ -74,11 +80,41 @@ export const constantRouterMap: any[] = [
   }
 ]
 
-// export const asyncRouterMap: AppRouteRecordRaw[] = []
+export const asyncRouterMap: AppRouteRecordRaw[] = [
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/index',
+    meta: {},
+    children: [
+      {
+        path: 'index',
+        component: () => import('_piv/dd/index.vue'),
+        name: 'Dashboard',
+        meta: {
+          title: '测试',
+          icon: 'dashboard'
+        }
+      }
+    ]
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: constantRouterMap as RouteRecordRaw[]
 })
+
+export function resetRouter(): void {
+  const newRouter = createRouter({
+    history: createWebHashHistory(),
+    routes: constantRouterMap as RouteRecordRaw[]
+  });
+  (router as any).matcher = (newRouter as any).matcher // reset router
+}
+
+export function setupRouter(app: App<Element>) {
+  app.use(router)
+}
 
 export default router

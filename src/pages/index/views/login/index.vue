@@ -64,7 +64,8 @@
 <script lang="ts">
 import { defineComponent, ref, unref, reactive, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
-
+import type { RouteRecordRaw } from 'vue-router'
+import { permissionStore } from '_pi/store/modules/permission'
 interface FormModule {
   userName: string,
   passWord: string
@@ -78,7 +79,7 @@ export default defineComponent({
   name: 'Login',
   setup() {
     const { proxy } = getCurrentInstance() as any
-    const { push } = useRouter()
+    const { push, addRoute, getRoutes } = useRouter()
     const loginForm = ref<any>(null)
     const loading = ref<boolean>(false)
     const redirect = ref<string>('')
@@ -96,8 +97,20 @@ export default defineComponent({
       loading.value = true
       try {
         const data: FormModule = await form.validate()
-        proxy.$wsCache.set(proxy.$config.user_info, data)
-        push({ path: redirect.value || '/' })
+        permissionStore.GenerateRoutes().then(() => {
+          // console.log(permissionStore.addRouters)
+          permissionStore.addRouters.forEach(async(route) => {
+            await addRoute(route.path, route) // 动态添加可访问路由表
+          })
+          // for (const v of permissionStore.addRouters) {
+
+          // }
+          console.log(permissionStore.routers)
+          console.log(getRoutes())
+          proxy.$wsCache.set(proxy.$config.user_info, data)
+          proxy.$wsCache.set('addRouters', permissionStore.addRouters)
+          push({ path: '/test' })
+        })
       } catch (err) {
         console.log(err)
       } finally {

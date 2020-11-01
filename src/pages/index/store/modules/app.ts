@@ -1,12 +1,12 @@
 import store from '../index'
 import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
-export interface IAppState {
+export interface AppState {
   collapsed: boolean
 }
 
 @Module({ dynamic: true, namespaced: true, store, name: 'app' })
-class App extends VuexModule implements IAppState {
+class App extends VuexModule implements AppState {
   public collapsed = false
 
   @Mutation
