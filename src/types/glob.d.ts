@@ -7,3 +7,15 @@ export interface EmptyObj {
 export interface EmptyObjFun {
   [key: string]: Function
 }
+
+declare type Nullable<T> = T | null
+
+// 任意对象
+declare interface IObj<T = any> {
+  [key: string]: T;
+  [key: number]: T;
+}
+
+declare type KeyString<T = any> = {
+  [key: string]: T;
+}

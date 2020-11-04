@@ -7,13 +7,15 @@ import { AppRouteRecordRaw, RouteMeta } from '@/types/router'
 
 export interface PermissionState {
   routers: AppRouteRecordRaw[],
-  addRouters: AppRouteRecordRaw[]
+  addRouters: AppRouteRecordRaw[],
+  isAddRouters: boolean
 }
 
 @Module({ dynamic: true, namespaced: true, store, name: 'permission' })
 class App extends VuexModule implements PermissionState {
   public routers = [] as any[]
   public addRouters = [] as any[]
+  public isAddRouters = false
 
   @Mutation
   private SET_ROUTERS(routers: AppRouteRecordRaw[]): void {
@@ -30,6 +32,10 @@ class App extends VuexModule implements PermissionState {
     // this.routers = deepClone(constantRouterMap, ['component']).concat(routers)
     this.routers = constantRouterMap.concat(routers)
   }
+  @Mutation
+  private SET_ISADDROUTERS(state: boolean): void {
+    this.isAddRouters = state
+  }
 
   @Action
   public GenerateRoutes(): Promise<unknown> {
@@ -39,6 +45,10 @@ class App extends VuexModule implements PermissionState {
       this.SET_ROUTERS(asyncRouterMap)
       resolve()
     })
+  }
+  @Action
+  public SetIsAddRouters(state: boolean): void {
+    this.SET_ISADDROUTERS(state)
   }
 }
 

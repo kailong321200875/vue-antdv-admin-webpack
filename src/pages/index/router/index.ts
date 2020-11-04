@@ -4,7 +4,9 @@ import { AppRouteRecordRaw } from '@/types/router'
 import type { App } from 'vue'
 
 /* Layout */
-import Layout from '../views/layout/index.vue'
+const Layout = () => import('../views/layout/index.vue')
+/* ParentView */
+// import ParentView from '_c/ParentView/index.vue'
 
 /**
 * redirect: noredirect        当设置 noredirect 的时候该路由在面包屑导航中不可被点击
@@ -32,6 +34,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: '/redirect/:path*',
+        name: 'Redirect',
         component: () => import('_c/Redirect/index.vue'),
         meta: {}
       }
@@ -43,6 +46,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('_piv/login/index.vue'),
+    name: 'Login',
     meta: {
       hidden: true,
       title: '登录'
@@ -85,12 +89,13 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     path: '/test',
     component: Layout,
     redirect: '/test/index',
+    name: 'Test',
     meta: {},
     children: [
       {
         path: 'index',
         component: () => import('_piv/dd/index.vue'),
-        name: 'Dashboard',
+        name: 'TestIndex',
         meta: {
           title: '测试',
           icon: 'dashboard'

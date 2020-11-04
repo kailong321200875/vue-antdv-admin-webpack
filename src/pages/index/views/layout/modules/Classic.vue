@@ -9,7 +9,7 @@
         <menu-fold-outlined v-else class="trigger" @click="setCollapsed(!collapsed)" />
       </a-layout-header>
       <a-layout-content :style="{ margin: '20px', background: '#fff' }">
-        {{ collapsed }}
+        <router-view></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>

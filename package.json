@@ -19,15 +19,18 @@
     "ant-design-vue": "^2.0.0-beta.10",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "lodash-es": "^4.17.15",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "qs": "^6.9.4",
+    "resize-observer-polyfill": "^1.5.1",
     "vue": "^3.0.0",
     "vue-router": "4.0.0-beta.13",
     "vuex": "^4.0.0-0",
     "web-storage-cache": "^1.1.1"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.3",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "@vue/cli-plugin-babel": "~4.5.0",

@@ -34,17 +34,16 @@ import { ref, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Slider',
+  components: {
+    Logo
+  },
   props: {
     collapsed: {
       type: Boolean,
       default: () => true
     }
   },
-  components: {
-    Logo
-  },
   setup() {
-    console.log(useRouter())
     const selectedKeys = ref<string[]>(['1'])
 
     return {

@@ -1,16 +1,22 @@
 <template>
   <div class="app-wrapper">
-    <classic-module />
+    <component :is="component" />
   </div>
 </template>
 
 <script lang="ts">
 import ClassicModule from './modules/Classic.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 export default defineComponent({
-  name: 'Classic',
+  name: 'Layout',
   components: {
     ClassicModule
+  },
+  setup() {
+    const component = ref<string>('ClassicModule')
+    return {
+      component
+    }
   }
 })
 </script>

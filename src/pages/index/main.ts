@@ -31,7 +31,11 @@ import { setupAntd } from '@/libs/antdv' // antdv UI
 
 import { setupSvgIcon } from '@/assets/icons' // svg图标
 
+import Scrollbar from '_c/Scrollbar/index.vue'
+
 const app = createApp(App)
+
+app.component('Scrollbar', Scrollbar)
 
 setupRouter(app) // 引入路由
 

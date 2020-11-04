@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, unref, reactive, getCurrentInstance } from 'vue'
+import { defineComponent, ref, unref, reactive, getCurrentInstance, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { permissionStore } from '_pi/store/modules/permission'
@@ -70,7 +70,7 @@ interface FormModule {
   userName: string,
   passWord: string
 }
-interface rulesModule {
+interface RulesModule {
   userName: any[],
   passWord: any[]
 }
@@ -79,15 +79,22 @@ export default defineComponent({
   name: 'Login',
   setup() {
     const { proxy } = getCurrentInstance() as any
-    const { push, addRoute, getRoutes } = useRouter()
+    const { push, addRoute, currentRoute } = useRouter()
     const loginForm = ref<any>(null)
     const loading = ref<boolean>(false)
     const redirect = ref<string>('')
+    watch(() => {
+      return currentRoute.value
+    }, (route) => {
+      redirect.value = (route.query && route.query.redirect) as string
+    }, {
+      immediate: true
+    })
     const form = reactive<FormModule>({
       userName: 'admin',
       passWord: 'admin'
     })
-    const rules = reactive<rulesModule>({
+    const rules = reactive<RulesModule>({
       userName: [{ required: true, message: '请输入账号' }],
       passWord: [{ required: true, message: '请输入密码' }]
     })
@@ -98,18 +105,13 @@ export default defineComponent({
       try {
         const data: FormModule = await form.validate()
         permissionStore.GenerateRoutes().then(() => {
-          // console.log(permissionStore.addRouters)
-          permissionStore.addRouters.forEach(async(route) => {
-            await addRoute(route.path, route) // 动态添加可访问路由表
+          permissionStore.addRouters.forEach(async(route: RouteRecordRaw) => {
+            await addRoute(route.name!, route) // 动态添加可访问路由表
           })
-          // for (const v of permissionStore.addRouters) {
-
-          // }
-          console.log(permissionStore.routers)
-          console.log(getRoutes())
           proxy.$wsCache.set(proxy.$config.user_info, data)
           proxy.$wsCache.set('addRouters', permissionStore.addRouters)
-          push({ path: '/test' })
+          permissionStore.SetIsAddRouters(true)
+          push({ path: redirect.value || '/' })
         })
       } catch (err) {
         console.log(err)
