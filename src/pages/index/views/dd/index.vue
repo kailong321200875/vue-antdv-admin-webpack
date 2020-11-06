@@ -1,10 +1,14 @@
 <template>
   <div>
-    <scrollbar wrap-class="scrollbar-wrapper" style="height:200px;width: 100px">
-      <div v-for="index in 20" :key="index" style="border: 1px solid red;height: 50px;background-color: #0000FF;width:200px">
-        {{ index }}
-      </div>
-    </scrollbar>
+    <div class="scroll-wrap">
+      <scrollbar class="mt-4">
+        <ul class="p-3" style="width: 1200px;">
+          <template v-for="index in 100" :key="index">
+            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
+          </template>
+        </ul>
+      </scrollbar>
+    </div>
   </div>
 </template>
 
@@ -15,5 +19,10 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="less" scoped>
+.scroll-wrap {
+  width: 50%;
+  height: 300px;
+  background: #fff;
+}
 </style>

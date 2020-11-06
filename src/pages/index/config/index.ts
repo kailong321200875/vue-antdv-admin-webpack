@@ -1,7 +1,7 @@
 /**
  * 全局配置
  */
-import { ConfigOptions } from '@/types/config'
+import { ConfigOptions } from './types'
 
 const config: ConfigOptions = {
   /**

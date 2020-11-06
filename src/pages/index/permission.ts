@@ -14,7 +14,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress configuration
 
-import { permissionStore } from '_pi/store/modules/permission'
+import { permissionStore } from '_p/index/store/modules/permission'
 
 import type { RouteRecordRaw } from 'vue-router'
 

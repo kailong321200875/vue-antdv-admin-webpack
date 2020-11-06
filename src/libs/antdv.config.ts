@@ -1,7 +1,7 @@
 /**
  * 为了保持多页antdv组件的样式统一，提供全局配置的方法。
  */
-import { ConfigAntdv } from '@/types/config'
+import { ConfigAntdv } from './types'
 
 const antdvConfig: ConfigAntdv = {
   /**

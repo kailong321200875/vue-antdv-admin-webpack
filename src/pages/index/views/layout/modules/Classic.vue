@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
-import { appStore } from '_pi/store/modules/app'
+import { appStore } from '_p/index/store/modules/app'
 import Silder from '../components/Silder/index.vue'
 export default defineComponent({
   name: 'Classic',

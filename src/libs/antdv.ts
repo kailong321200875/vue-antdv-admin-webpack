@@ -1,8 +1,9 @@
 // 按需加载antdv
 import type { App } from 'vue'
 
-import antdvConfig from '@/libs/antdv.config'
+import antdvConfig from './antdv.config'
 
+// antdv全局配置项
 const { message_top, message_duration, message_maxCount } = antdvConfig
 
 import {

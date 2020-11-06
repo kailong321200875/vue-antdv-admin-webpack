@@ -2,21 +2,21 @@
   <div class="scrollbar">
     <template v-if="!native">
       <div
-        :ref="wrapElRef"
+        ref="wrapElRef"
         :style="style"
-        @scroll="handleScroll"
         :class="[wrapClass, 'scrollbar__wrap', gutter ? '' : 'scrollbar__wrap--hidden-default']"
+        @scroll="handleScroll"
       >
         <div
+          ref="resizeRef"
           :class="['scrollbar__view', viewClass]"
           :style="viewStyle"
-          :ref="resizeRef"
         >
           <slot />
-          <bar :move="state.moveX" :size="state.sizeWidth" />
-          <bar vertical :move="state.moveY" :size="state.sizeHeight" />
         </div>
       </div>
+      <bar :move="state.moveX" :size="state.sizeWidth" />
+      <bar vertical :move="state.moveY" :size="state.sizeHeight" />
     </template>
     <template v-else>
       <div
@@ -25,9 +25,9 @@
         :style="style"
       >
         <div
+          ref="resizeRef"
           :class="['scrollbar__view', viewClass]"
           :style="viewStyle"
-          :ref="resizeRef"
         >
           <slot />
         </div>
@@ -50,8 +50,8 @@ import {
   onBeforeUnmount,
   getCurrentInstance
 } from 'vue'
-import { addResizeListener, removeResizeListener } from '@/utils/event/resizeEvent'
-import scrollbarWidth from '@/utils/scrollbarWidth'
+import { addResizeListener, removeResizeListener } from '@/utils/event/resize-event'
+import scrollbarWidth from '@/utils/scrollbar-width'
 import { isString } from '@/utils/is'
 import { toObject } from './util'
 import Bar from './Bar.vue'
@@ -66,12 +66,25 @@ export default defineComponent({
       default: false
     },
     wrapStyle: {
-      type: Object as PropType<any>
+      type: Object as PropType<any>,
+      default: () => null
     },
-    wrapClass: { type: String as PropType<string>, required: false },
-    viewClass: { type: String as PropType<string> },
-    viewStyle: { type: Object as PropType<any> },
-    noresize: Boolean as PropType<boolean>,
+    wrapClass: {
+      type: String as PropType<string>, required: false,
+      default: 'scrollbar__wrap'
+    },
+    viewClass: {
+      type: String as PropType<string>,
+      default: 'scrollbar__view'
+    },
+    viewStyle: {
+      type: Object as PropType<any>,
+      default: () => {}
+    },
+    noresize: {
+      type: Boolean as PropType<boolean>,
+      default: false
+    },
     tag: {
       type: String as PropType<string>,
       default: 'div'
@@ -106,7 +119,6 @@ export default defineComponent({
 
     function handleScroll() {
       const warpEl = unref(wrapElRef)
-      console.log(warpEl)
       if (!warpEl) return
       const { scrollTop, scrollLeft, clientHeight, clientWidth } = warpEl
 
@@ -168,10 +180,14 @@ export default defineComponent({
 .scrollbar {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 
   &__wrap {
     height: 100%;
     overflow: scroll;
+    margin-bottom: 17px !important;
+    overflow-x: hidden;
 
     &--hidden-default {
       scrollbar-width: none;
@@ -183,7 +199,7 @@ export default defineComponent({
     }
   }
 
-  &__thumb {
+  ::v-deep &__thumb {
     position: relative;
     display: block;
     width: 0;

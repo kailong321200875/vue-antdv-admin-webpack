@@ -15,7 +15,7 @@ export function getBoundingClientRect(element: Element): DOMRect | number {
   }
   return element.getBoundingClientRect()
 }
-const trim = function (string: string) {
+const trim = function(string: string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
 }
 /* istanbul ignore next */
@@ -111,7 +111,7 @@ export function getViewportOffset(element: Element): ViewportOffsetResult {
     right: clientWidth - rectWidth - left,
     bottom: clientHeight - rectHeight - top,
     rightIncludeBody: clientWidth - left,
-    bottomIncludeBody: clientHeight - top,
+    bottomIncludeBody: clientHeight - top
   }
 }
 
@@ -124,12 +124,12 @@ export function hackCss(attr: string, value: string) {
   })
   return {
     ...styleObj,
-    [attr]: value,
+    [attr]: value
   }
 }
 
 /* istanbul ignore next */
-export const on = function (
+export const on = function(
   element: HTMLElement | Document | Window,
   event: string,
   handler: EventListenerOrEventListenerObject
@@ -140,7 +140,7 @@ export const on = function (
 }
 
 /* istanbul ignore next */
-export const off = function (
+export const off = function(
   element: HTMLElement | Document | Window,
   event: string,
   handler: any

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import { AppRouteRecordRaw } from '@/types/router'
+import { AppRouteRecordRaw } from './types'
 import type { App } from 'vue'
 
 /* Layout */
@@ -45,7 +45,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   },
   {
     path: '/login',
-    component: () => import('_piv/login/index.vue'),
+    component: () => import('_p/index/views/login/index.vue'),
     name: 'Login',
     meta: {
       hidden: true,
@@ -60,7 +60,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('_piv/test/index.vue'),
+        component: () => import('_p/index/views/test/index.vue'),
         name: 'Dashboard',
         meta: {
           title: '首页',
@@ -94,7 +94,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        component: () => import('_piv/dd/index.vue'),
+        component: () => import('_p/index/views/dd/index.vue'),
         name: 'TestIndex',
         meta: {
           title: '测试',

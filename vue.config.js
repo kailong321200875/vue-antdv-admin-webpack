@@ -57,8 +57,7 @@ const vueConfig = {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('_c', resolve('src/components'))
-      .set('_pi', resolve('src/pages/index'))
-      .set('_piv', resolve('src/pages/index/views'))
+      .set('_p', resolve('src/pages'))
       // .set('_pd1', resolve('src/pages/demo1'))
       // .set('_pd1v', resolve('src/pages/demo1/views'))
 

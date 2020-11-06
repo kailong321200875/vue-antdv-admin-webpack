@@ -1,14 +1,14 @@
 <template>
   <div
+    ref="elRef"
     :class="['scrollbar__bar', 'is-' + bar.key]"
     @mousedown="clickTrackHandler"
-    :ref="elRef"
   >
     <div
-      :ref="thumbRef"
+      ref="thumbRef"
       class="scrollbar__thumb"
-      @mousedown="clickThumbHandler"
       :style="renderThumbStyle({ size, move, bar })"
+      @mousedown="clickThumbHandler"
     />
   </div>
 </template>
@@ -17,7 +17,7 @@
 import type { PropType } from 'vue'
 import { defineComponent, computed, unref, inject, Ref, reactive, ref, onBeforeUnmount } from 'vue'
 import { renderThumbStyle, BAR_MAP } from './util'
-import { on, off } from '@/utils/domUtils'
+import { on, off } from '@/utils/dom-utils'
 export default defineComponent({
   name: 'Bar',
   props: {
@@ -25,8 +25,14 @@ export default defineComponent({
       type: Boolean as PropType<boolean>,
       default: false
     },
-    size: String as PropType<string>,
-    move: Number as PropType<number>
+    size: {
+      type: String as PropType<string>,
+      default: ''
+    },
+    move: {
+      type: Number as PropType<number>,
+      default: 0
+    }
   },
   setup(props) {
     const thumbRef = ref<HTMLElement | null>(null)
@@ -115,5 +121,11 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="less" scoped>
+.scrollbar__bar.is-vertical>div {
+  width: 100%;
+}
+.scrollbar__bar.is-horizontal>div {
+  height: 100%;
+}
 </style>

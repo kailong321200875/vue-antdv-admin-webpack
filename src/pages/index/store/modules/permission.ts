@@ -1,9 +1,9 @@
 import path from 'path'
-import { asyncRouterMap, constantRouterMap } from '_pi/router'
+import { asyncRouterMap, constantRouterMap } from '_p/index/router'
 import { deepClone } from '@/utils'
 import store from '../index'
 import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { AppRouteRecordRaw, RouteMeta } from '@/types/router'
+import { AppRouteRecordRaw, RouteMeta } from '_p/index/router/types'
 
 export interface PermissionState {
   routers: AppRouteRecordRaw[],
@@ -19,9 +19,9 @@ class App extends VuexModule implements PermissionState {
 
   @Mutation
   private SET_ROUTERS(routers: AppRouteRecordRaw[]): void {
-    // const flatRoutes: AppRouteRecordRaw[] = getFlatRoutes(deepClone(asyncRouterMap, ['component']))
-    // this.addRouters = flatRoutes
-    this.addRouters = routers
+    const flatRoutes: AppRouteRecordRaw[] = getFlatRoutes(deepClone(asyncRouterMap, ['component']))
+    this.addRouters = flatRoutes
+    // this.addRouters = routers
     // .concat([{
     //   path: '/:path(.*)*',
     //   redirect: '/404',
@@ -29,8 +29,8 @@ class App extends VuexModule implements PermissionState {
     //     hidden: true
     //   }
     // }])
-    // this.routers = deepClone(constantRouterMap, ['component']).concat(routers)
-    this.routers = constantRouterMap.concat(routers)
+    this.routers = deepClone(constantRouterMap, ['component']).concat(routers)
+    // this.routers = constantRouterMap.concat(routers)
   }
   @Mutation
   private SET_ISADDROUTERS(state: boolean): void {
@@ -40,9 +40,9 @@ class App extends VuexModule implements PermissionState {
   @Action
   public GenerateRoutes(): Promise<unknown> {
     return new Promise(resolve => {
-      // const routerMap: AppRouteRecordRaw[] = generateRoutes(deepClone(asyncRouterMap, ['component']))
-      // this.SET_ROUTERS(routerMap)
-      this.SET_ROUTERS(asyncRouterMap)
+      const routerMap: AppRouteRecordRaw[] = generateRoutes(deepClone(asyncRouterMap, ['component']))
+      this.SET_ROUTERS(routerMap)
+      // this.SET_ROUTERS(asyncRouterMap)
       resolve()
     })
   }

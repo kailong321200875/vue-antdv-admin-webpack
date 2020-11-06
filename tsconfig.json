@@ -29,11 +29,8 @@
       "_c/*": [
         "src/components/*"
       ],
-      "_pi/*": [
-        "src/pages/index/*"
-      ],
-      "_piv/*": [
-        "src/pages/index/views/*"
+      "_p/*": [
+        "src/pages/*"
       ]
     },
     "lib": [

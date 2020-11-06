@@ -13,12 +13,3 @@ export interface ConfigOptions {
   request_timeout: number
   user_info: string
 }
-
-/**
- * antdv配置
- */
-export interface ConfigAntdv {
-  message_top: string,
-  message_duration: number,
-  message_maxCount: number
-}

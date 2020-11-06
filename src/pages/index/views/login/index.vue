@@ -65,7 +65,7 @@
 import { defineComponent, ref, unref, reactive, getCurrentInstance, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
-import { permissionStore } from '_pi/store/modules/permission'
+import { permissionStore } from '_p/index/store/modules/permission'
 interface FormModule {
   userName: string,
   passWord: string
