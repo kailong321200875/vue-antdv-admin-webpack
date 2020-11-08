@@ -62,10 +62,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, unref, reactive, getCurrentInstance, watch } from 'vue'
+import { defineComponent, ref, unref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { permissionStore } from '_p/index/store/modules/permission'
+import config from '_p/index/config'
+import wsCache from '@/cache'
+
 interface FormModule {
   userName: string,
   passWord: string
@@ -78,9 +81,8 @@ interface RulesModule {
 export default defineComponent({
   name: 'Login',
   setup() {
-    const { proxy } = getCurrentInstance() as any
     const { push, addRoute, currentRoute } = useRouter()
-    const loginForm = ref<any>(null)
+    const loginForm = ref<HTMLElement | null>(null)
     const loading = ref<boolean>(false)
     const redirect = ref<string>('')
     watch(() => {
@@ -99,7 +101,7 @@ export default defineComponent({
       passWord: [{ required: true, message: '请输入密码' }]
     })
     async function login(): Promise<void> {
-      const form = unref(loginForm)
+      const form = unref(loginForm) as any
       if (!form) return
       loading.value = true
       try {
@@ -108,8 +110,7 @@ export default defineComponent({
           permissionStore.addRouters.forEach(async(route: RouteRecordRaw) => {
             await addRoute(route.name!, route) // 动态添加可访问路由表
           })
-          proxy.$wsCache.set(proxy.$config.user_info, data)
-          proxy.$wsCache.set('addRouters', permissionStore.addRouters)
+          wsCache.set(config.user_info, data)
           permissionStore.SetIsAddRouters(true)
           push({ path: redirect.value || '/' })
         })
@@ -121,10 +122,7 @@ export default defineComponent({
     }
     return {
       loginForm,
-      loading,
-      redirect,
-      form,
-      rules,
+      loading, redirect, form, rules,
       login
     }
   }

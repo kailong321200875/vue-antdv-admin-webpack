@@ -112,10 +112,7 @@ export default defineComponent({
       bar,
       clickThumbHandler,
       clickTrackHandler,
-      renderThumbStyle,
-      mouseUpDocumentHandler,
-      mouseMoveDocumentHandler,
-      startDrag
+      renderThumbStyle
     }
   }
 })

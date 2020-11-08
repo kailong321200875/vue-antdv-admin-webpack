@@ -56,7 +56,11 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    meta: {},
+    meta: {
+      alwaysShow: true,
+      title: '首页',
+      icon: 'dashboard'
+    },
     children: [
       {
         path: 'dashboard',
@@ -90,16 +94,39 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     component: Layout,
     redirect: '/test/index',
     name: 'Test',
-    meta: {},
+    meta: {
+      alwaysShow: true,
+      title: '测试管理',
+      icon: 'dashboard'
+    },
     children: [
       {
         path: 'index',
         component: () => import('_p/index/views/dd/index.vue'),
         name: 'TestIndex',
+        redirect: '/test/index/index2',
         meta: {
+          alwaysShow: true,
           title: '测试',
-          icon: 'dashboard'
-        }
+        },
+        children: [
+          {
+            path: 'index2',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TestIndex2',
+            meta: {
+              title: '测试2',
+            }
+          },
+          {
+            path: 'index3',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TestIndex3',
+            meta: {
+              title: '测试3',
+            }
+          }
+        ]
       }
     ]
   }

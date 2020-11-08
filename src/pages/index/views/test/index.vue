@@ -25,12 +25,11 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance } from 'vue'
+import { ref } from 'vue'
+import api from '_p/index/api'
+const { common } = api
 export default {
   setup() {
-    const instance: any = getCurrentInstance()
-    const { proxy } = instance
-
     const inputVal = ref<string>('')
 
     const changeInputVal = (): void => {
@@ -45,7 +44,7 @@ export default {
     const noChange = '我是不可改变的'
 
     const getList = async(): Promise<void> => {
-      const res = await proxy.$api.common.getList({
+      const res = await common.getList({
         page: 1,
         count: 10
       })

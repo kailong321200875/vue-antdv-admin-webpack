@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance } from 'vue'
+import { defineComponent } from 'vue'
+import config from '_p/index/config'
 
 export default defineComponent({
   name: 'Logo',
@@ -19,9 +20,8 @@ export default defineComponent({
     }
   },
   setup() {
-    const { proxy } = getCurrentInstance() as any
     return {
-      title: proxy.$config.title
+      title: config.title
     }
   }
 })

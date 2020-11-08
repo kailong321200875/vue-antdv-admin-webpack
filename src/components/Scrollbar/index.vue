@@ -71,11 +71,11 @@ export default defineComponent({
     },
     wrapClass: {
       type: String as PropType<string>, required: false,
-      default: 'scrollbar__wrap'
+      default: ''
     },
     viewClass: {
       type: String as PropType<string>,
-      default: 'scrollbar__view'
+      default: ''
     },
     viewStyle: {
       type: Object as PropType<any>,
@@ -115,7 +115,6 @@ export default defineComponent({
         style = gutterStyle
       }
     }
-    // const Tag = props.tag as any
 
     function handleScroll() {
       const warpEl = unref(wrapElRef)
@@ -164,13 +163,9 @@ export default defineComponent({
     })
 
     return {
-      wrapElRef,
-      style,
-      handleScroll,
-      resizeRef,
-      state,
-      gutter,
-      update
+      resizeRef, wrapElRef,
+      state, gutter, style,
+      handleScroll
     }
   }
 })

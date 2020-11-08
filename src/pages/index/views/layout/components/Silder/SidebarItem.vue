@@ -1,90 +1,60 @@
 <template>
-  <div v-if="!item.hidden" class="menu-wrapper">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
+  <template v-if="!item.meta.hidden">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.meta.alwaysShow">
+      <!-- <app-link :to="resolvePath(basePath, onlyOneChild.path)"> -->
+      <a-menu-item :key="resolvePath(basePath, onlyOneChild.path)" v-bind="$attrs">
+        <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+      </a-menu-item>
+      <!-- </app-link> -->
     </template>
 
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)">
-      <template slot="title">
+    <a-sub-menu v-else ref="subMenu" :key="resolvePath(basePath, item.path)">
+      <template #title>
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
         v-for="child in item.children"
-        :key="child.path"
+        :key="resolvePath(basePath, child.path)"
         :is-nest="true"
         :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
+        :base-path="resolvePath(basePath, child.path)"
       />
-    </el-submenu>
-  </div>
+    </a-sub-menu>
+  </template>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType, ref, reactive } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 import path from 'path'
 import { isExternal } from '@/utils/validate'
-import Item from './Item'
-import AppLink from './Link'
+import Item from './Item.vue'
+import AppLink from './Link.vue'
+import { setSidebarItem } from './hooks/setSidebarItem'
 
-export default {
+export default defineComponent({
   name: 'SidebarItem',
   components: { Item, AppLink },
   props: {
     // route object
     item: {
-      type: Object,
+      type: Object as PropType<object>,
       required: true
     },
     isNest: {
-      type: Boolean,
+      type: Boolean as PropType<boolean>,
       default: false
     },
     basePath: {
-      type: String,
+      type: String as PropType<string>,
       default: ''
     }
   },
-  data() {
-    // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
-    this.onlyOneChild = null
-    return {}
-  },
-  methods: {
-    hasOneShowingChild(children = [], parent) {
-      const showingChildren = children.filter(item => {
-        if (item.hidden) {
-          return false
-        } else {
-          // Temp set(will be used if only has one showing child)
-          this.onlyOneChild = item
-          return true
-        }
-      })
-
-      // When there is only one child router, the child router is displayed by default
-      if (showingChildren.length === 1) {
-        return true
-      }
-
-      // Show parent if there are no child router to display
-      if (showingChildren.length === 0) {
-        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
-        return true
-      }
-
-      return false
-    },
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath
-      }
-      return path.resolve(this.basePath, routePath)
+  setup(props) {
+    const { onlyOneChild, hasOneShowingChild, resolvePath } = setSidebarItem()
+    return {
+      onlyOneChild, hasOneShowingChild, resolvePath
     }
   }
-}
+})
 </script>

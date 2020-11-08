@@ -19,13 +19,7 @@ import { setupRouter } from './router' // 路由
 
 import { setupStore } from './store' // 状态管理
 
-import wsCache from '@/cache' // web缓存
-
-import config from './config' // 全局配置
-
 import './permission' // 路由守卫
-
-import api from './api' // 接口api
 
 import { setupAntd } from '@/libs/antdv' // antdv UI
 
@@ -46,11 +40,5 @@ setupStore(app) // 引入状态管理
 setupAntd(app) // 引入antdv组件
 
 setupSvgIcon(app) // 全局注册svgIcon组件
-
-app.config.globalProperties.$api = api
-
-app.config.globalProperties.$wsCache = wsCache
-
-app.config.globalProperties.$config = config
 
 app.mount('#app')
