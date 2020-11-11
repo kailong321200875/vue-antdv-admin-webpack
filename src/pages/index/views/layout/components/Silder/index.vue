@@ -3,11 +3,12 @@
     <div class="logo">
       <logo :collapsed="collapsed" />
     </div>
+    <!-- <silder-menu /> -->
     <a-menu
-      v-model:selectedKeys="activeMenu"
+      v-model:selectedKeys="selectedKeys"
+      :defaultOpenKeys="defaultOpenKeys"
       theme="dark"
       mode="inline"
-      :inline-collapsed="collapsed"
       @click="menuClick"
       @select="menuSelect"
     >
@@ -16,7 +17,6 @@
         :key="resolvePath('/', route.path)"
         :item="route"
         :base-path="route.path"
-        v-bind="$attrs"
       />
     </a-menu>
   </div>
@@ -24,12 +24,14 @@
 
 <script lang="ts">
 import Logo from '../../components/Logo.vue'
-import { ref, defineComponent, PropType, computed } from 'vue'
+import { ref, unref, defineComponent, PropType, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import Scrollbar from '_c/Scrollbar/index.vue'
 import SidebarItem from './SidebarItem.vue'
+import SilderMenu from './Menu'
 import { permissionStore } from '_p/index/store/modules/permission'
+import { appStore } from '_p/index/store/modules/app'
 import { setSidebarItem } from './hooks/setSidebarItem'
 import config from '_p/index/config'
 const { show_logo } = config
@@ -39,6 +41,7 @@ export default defineComponent({
   components: {
     Logo,
     Scrollbar,
+    SilderMenu,
     SidebarItem
   },
   props: {
@@ -50,10 +53,10 @@ export default defineComponent({
   setup() {
     const { meta, path } = useRoute()
     const { currentRoute } = useRouter()
-    const { resolvePath, treeFindPath, getFullPath } = setSidebarItem()
+    const { onlyOneChild, hasOneShowingChild, resolvePath, treeFindPath, getFullPath } = setSidebarItem()
     const parentName: string[] = treeFindPath(permissionStore.routers, (data: any) => data.name === currentRoute.value.name)
-    const openKeys = ref<string[]>(getFullPath(parentName))
-    const activeMenu = ref<string[]>(meta.activeMenu ? [meta.activeMenu] : [path])
+    const defaultOpenKeys = ref<string[]>(getFullPath(parentName))
+    const selectedKeys = ref<string[]>(meta.activeMenu ? [meta.activeMenu] : [path])
 
     const routers = computed((): RouteRecordRaw[] => {
       return permissionStore.routers
@@ -67,9 +70,9 @@ export default defineComponent({
     }
 
     return {
-      openKeys, activeMenu, routers, menuClick, menuSelect,
+      defaultOpenKeys, selectedKeys, routers, menuClick, menuSelect,
       show_logo,
-      resolvePath
+      onlyOneChild, hasOneShowingChild, resolvePath
     }
   }
 })

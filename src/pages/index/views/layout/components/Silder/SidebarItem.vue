@@ -8,7 +8,7 @@
       <!-- </app-link> -->
     </template>
 
-    <a-sub-menu v-else ref="subMenu" :key="resolvePath(basePath, item.path)">
+    <a-sub-menu v-else :key="resolvePath(basePath, item.path)" v-bind="$attrs">
       <template #title>
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import path from 'path'
 import { isExternal } from '@/utils/validate'
-import { setSidebarItem } from './types'
+// import { setSidebarItem } from './types'
 
 export function setSidebarItem() {
   const onlyOneChild = ref<any>(null)

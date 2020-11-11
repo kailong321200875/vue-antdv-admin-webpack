@@ -57,9 +57,9 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     component: Layout,
     redirect: '/dashboard',
     meta: {
-      alwaysShow: true,
-      title: '首页',
-      icon: 'dashboard'
+      // alwaysShow: true,
+      // title: '首页管理',
+      // icon: 'dashboard',
     },
     children: [
       {

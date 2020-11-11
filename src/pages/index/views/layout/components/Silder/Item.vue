@@ -1,9 +1,9 @@
 <template>
   <span>
-    <!-- <i v-if="icon.includes('el-icon')" :class="[icon, 'sub-el-icon']" />
-    <svg-icon v-else :icon-class="icon" /> -->
+    <i v-if="icon.includes('el-icon')" :class="[icon, 'sub-el-icon', 'anticon']" />
+    <svg-icon v-else :icon-class="icon" class="anticon" />
     <slot name="title">
-      <span>{{ title }}</span>
+      <span class="anticon-item">{{ title }}</span>
     </slot>
   </span>
 </template>
@@ -26,5 +26,9 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="less" scoped>
+.anticon-item {
+  opacity: 1;
+  transition: opacity .3s cubic-bezier(.645,.045,.355,1),width .3s cubic-bezier(.645,.045,.355,1);
+}
 </style>

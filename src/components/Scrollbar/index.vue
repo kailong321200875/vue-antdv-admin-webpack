@@ -85,10 +85,10 @@ export default defineComponent({
       type: Boolean as PropType<boolean>,
       default: false
     },
-    tag: {
-      type: String as PropType<string>,
-      default: 'div'
-    }
+    // tag: {
+    //   type: String as PropType<string>,
+    //   default: 'div'
+    // }
   },
   setup(props) {
     const resizeRef = ref<HTMLElement | null>(null)
