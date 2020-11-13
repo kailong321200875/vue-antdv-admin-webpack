@@ -5,11 +5,16 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
-        <menu-unfold-outlined v-if="collapsed" class="trigger" @click="setCollapsed(!collapsed)" />
-        <menu-fold-outlined v-else class="trigger" @click="setCollapsed(!collapsed)" />
+        <hamburger :collapsed="collapsed" @toggleClick="setCollapsed" />
       </a-layout-header>
-      <a-layout-content :style="{ margin: '20px', background: '#fff' }">
-        <router-view></router-view>
+      <a-layout-content>
+        <section class="app-main">
+          <router-view v-slot="{ Component }" class="view-main">
+            <transition name="fade-transform" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </section>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -17,14 +22,13 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { appStore } from '_p/index/store/modules/app'
 import Silder from '../components/Silder/index.vue'
+import Hamburger from '_c/Hamburger/index.vue'
 export default defineComponent({
   name: 'Classic',
   components: {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
+    Hamburger,
     Silder
   },
   setup() {
@@ -43,21 +47,15 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
+.app-main {
+  // min-height: calc(100vh - 50px);
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f7f9;
 
-.trigger:hover {
-  color: #1890ff;
+  .view-main {
+    padding: 20px;
+    position: relative;
+  }
 }
-
-// #components-layout-demo-custom-trigger .logo {
-//   height: 32px;
-//   background: rgba(255, 255, 255, 0.2);
-//   margin: 16px;
-// }
 </style>

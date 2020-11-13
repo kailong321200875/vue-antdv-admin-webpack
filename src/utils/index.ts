@@ -17,3 +17,23 @@ export function deepClone(source: any, noClone: string[] = []): any {
   })
   return targetObj
 }
+
+/**
+ * 查找数组对象的某个下标
+ * @param {Array} ary 查找的数组
+ * @param {Functon} fn 判断的方法
+ */
+export function findIndex(ary: any, fn: Function): number {
+  if (ary.findIndex) {
+    return ary.findIndex(fn)
+  }
+  let index = -1
+  ary.some((item: any, i: number, ary: any) => {
+    const ret: any = fn(item, i, ary)
+    if (ret) {
+      index = i
+      return ret
+    }
+  })
+  return index
+}

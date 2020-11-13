@@ -106,8 +106,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'TestIndex',
         redirect: '/test/index/index2',
         meta: {
-          alwaysShow: true,
-          title: '测试',
+          // alwaysShow: true,
+          title: '测试'
         },
         children: [
           {
@@ -115,7 +115,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             component: () => import('_p/index/views/dd/index.vue'),
             name: 'TestIndex2',
             meta: {
-              title: '测试2',
+              title: '测试2'
+              // activeMenu: '/test/index/index3'
             }
           },
           {
@@ -123,7 +124,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             component: () => import('_p/index/views/dd/index.vue'),
             name: 'TestIndex3',
             meta: {
-              title: '测试3',
+              title: '测试3'
             }
           }
         ]

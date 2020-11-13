@@ -37,21 +37,21 @@ export function setSidebarItem() {
     }
     return path.resolve(basePath, routePath)
   }
-  
-  function treeFindPath(tree: any[], func: Function, result: string[] = []): string[] {
+
+  function treeFindRouter(tree: any[], func: Function, result: RouteRecordRaw[] = []): RouteRecordRaw[] {
     if (!tree) return []
     for (const data of tree) {
-      result.push(data.path)
+      result.push(data)
       if (func(data)) return result
       if (data.children) {
-        const findChildren = treeFindPath(data.children, func, result)
+        const findChildren = treeFindRouter(data.children, func, result)
         if (findChildren.length) return findChildren
       }
       result.pop()
     }
     return []
   }
-  
+
   function getFullPath(arr: string[]): string[] {
     const result: string[] = []
     let basePath = '/'
@@ -69,7 +69,7 @@ export function setSidebarItem() {
     onlyOneChild,
     hasOneShowingChild,
     resolvePath,
-    treeFindPath,
+    treeFindRouter,
     getFullPath
   }
 }
