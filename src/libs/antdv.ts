@@ -13,7 +13,8 @@ import {
   Card,
   Layout,
   Menu,
-  message
+  message,
+  Dropdown
 } from 'ant-design-vue'
 
 message.config({
@@ -29,6 +30,7 @@ export function setupAntd(app: App<Element>): void {
   app.use(Card)
   app.use(Layout)
   app.use(Menu)
+  app.use(Dropdown)
 
   app.config.globalProperties.$message = message
 }

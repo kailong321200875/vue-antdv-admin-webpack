@@ -5,7 +5,7 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
-        <hamburger :collapsed="collapsed" @toggleClick="setCollapsed" />
+        <navbar />
       </a-layout-header>
       <a-layout-content>
         <section class="app-main">
@@ -24,23 +24,18 @@
 import { defineComponent, computed } from 'vue'
 import { appStore } from '_p/index/store/modules/app'
 import Silder from '../components/Silder/index.vue'
-import Hamburger from '_c/Hamburger/index.vue'
+import Navbar from '../components/Navbar.vue'
 export default defineComponent({
   name: 'Classic',
   components: {
-    Hamburger,
-    Silder
+    Silder,
+    Navbar
   },
   setup() {
     const collapsed = computed(() => appStore.collapsed)
 
-    function setCollapsed(collapsed: boolean): void {
-      appStore.SetCollapsed(collapsed)
-    }
-
     return {
-      collapsed,
-      setCollapsed
+      collapsed
     }
   }
 })
@@ -57,5 +52,9 @@ export default defineComponent({
     padding: 20px;
     position: relative;
   }
+}
+::v-deep .ant-layout-header {
+  line-height: @navbarHeight;
+  height: @navbarHeight;
 }
 </style>

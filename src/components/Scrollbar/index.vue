@@ -84,7 +84,7 @@ export default defineComponent({
     noresize: {
       type: Boolean as PropType<boolean>,
       default: false
-    },
+    }
     // tag: {
     //   type: String as PropType<string>,
     //   default: 'div'

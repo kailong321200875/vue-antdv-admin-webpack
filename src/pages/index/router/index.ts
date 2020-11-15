@@ -31,6 +31,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/redirect',
     component: Layout,
+    name: 'RedirectRoot',
     children: [
       {
         path: '/redirect/:path*',
@@ -56,6 +57,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    name: 'Root',
     meta: {
       // alwaysShow: true,
       // title: '首页管理',
@@ -139,11 +141,19 @@ const router = createRouter({
 })
 
 export function resetRouter(): void {
-  const newRouter = createRouter({
-    history: createWebHashHistory(),
-    routes: constantRouterMap as RouteRecordRaw[]
-  });
-  (router as any).matcher = (newRouter as any).matcher // reset router
+  const resetWhiteNameList = [
+    'RedirectRoot',
+    'Redirect',
+    'Login',
+    'Root',
+    'Dashboard'
+  ]
+  router.getRoutes().forEach((route) => {
+    const { name } = route
+    if (name && !resetWhiteNameList.includes(name as string)) {
+      router.removeRoute(name)
+    }
+  })
 }
 
 export function setupRouter(app: App<Element>) {

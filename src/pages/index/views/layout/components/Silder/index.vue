@@ -1,11 +1,11 @@
 <template>
   <div :class="{'has-logo':show_logo}">
-    <logo :collapsed="collapsed" />
+    <logo :collapsed="collapsed" :theme="theme" />
     <a-menu
       v-model:selectedKeys="selectedKeys"
       v-model:openKeys="openKeys"
-      theme="dark"
-      mode="inline"
+      :theme="theme"
+      :mode="mode"
     >
       <sidebar-item
         v-for="route in routers"
@@ -13,6 +13,7 @@
         :item="route"
         :base-path="route.path"
         :active-menu-name="activeMenuName"
+        :theme="theme"
       />
     </a-menu>
   </div>
@@ -41,6 +42,22 @@ export default defineComponent({
     collapsed: {
       type: Boolean as PropType<boolean>,
       default: true
+    },
+    inlineIndent: {
+      type: Number as PropType<number>,
+      default: 24
+    },
+    forceSubMenuRender: {
+      type: Boolean as PropType<boolean>,
+      default: false
+    },
+    mode: {
+      type: String as PropType<'vertical' | 'horizontal' | 'vertical-right' | 'inline'>,
+      default: 'inline'
+    },
+    theme: {
+      type: String as PropType<'light' | 'dark'>,
+      default: 'dark'
     }
   },
   setup(props) {
@@ -56,7 +73,6 @@ export default defineComponent({
     watch(
       () => currentRoute.value,
       (route: RouteLocationNormalizedLoaded) => {
-        // setOpenKeys(route, false)
         setSelectedKeys(route)
       },
       {

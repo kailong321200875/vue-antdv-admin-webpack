@@ -1,5 +1,5 @@
 <template>
-  <router-link class="app-logo" to="/">
+  <router-link :class="['app-logo', 'app-logo-' + theme]" to="/">
     <img :src="require('@/assets/img/logo.png')">
     <div v-if="show" class="sidebar-title">{{ title }}</div>
   </router-link>
@@ -15,6 +15,10 @@ export default defineComponent({
     collapsed: {
       type: Boolean as PropType<boolean>,
       required: true
+    },
+    theme: {
+      type: String as PropType<'light' | 'dark'>,
+      default: 'dark'
     }
   },
   setup(props) {
@@ -51,11 +55,22 @@ export default defineComponent({
     height: 37px;
   }
   .sidebar-title {
-    color: #fff;
     font-size: 14px;
     font-weight: 700;
     transition: .5s;
     margin-left: 12px;
+  }
+}
+.app-logo-dark {
+  background-color: @menuBg;
+  .sidebar-title {
+    color: #fff;
+  }
+}
+.app-logo-light {
+  background-color: #fff;
+  .sidebar-title {
+    color: #000;
   }
 }
 </style>

@@ -17,8 +17,8 @@
     <a-sub-menu
       v-else
       :key="resolvePath(basePath, item.path)"
-      :class="highlightMenu('active-item')"
-      :popup-class-name="highlightMenu('popup-active-item')"
+      :class="highlightMenu(theme + '-active-item')"
+      :popup-class-name="highlightMenu(theme + '-popup-active-item')"
     >
       <template #title>
         <item
@@ -64,6 +64,10 @@ export default defineComponent({
     activeMenuName: {
       type: String as PropType<string>,
       default: ''
+    },
+    theme: {
+      type: String as PropType<'light' | 'dark'>,
+      default: 'light'
     }
   },
   setup(props) {

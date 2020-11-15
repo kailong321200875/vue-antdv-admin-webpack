@@ -1,15 +1,26 @@
-// 菜单收缩时高亮选中菜单
 .ant-layout-sider-collapsed {
-  .active-item {
-    background-color: #182443;
+  .dark-active-item {
+    background-color: @menuDarkActiveBg;
     .ant-menu-submenu-title {
-      color: #fff;
+      color: @menuDarkActiveText;
+    }
+  }
+  .light-active-item {
+    background-color: @menuLightActiveBg;
+    .ant-menu-submenu-title {
+      color: @menuLightActiveText;
     }
   }
 }
 
-.popup-active-item {
+.dark-popup-active-item {
   .ant-menu-submenu-title {
-    color: #fff;
+    color: @menuDarkActiveText;
+  }
+}
+
+.light-popup-active-item {
+  .ant-menu-submenu-title {
+    color: @menuLightActiveText;
   }
 }
