@@ -41,12 +41,12 @@
         <RightOutlined />
       </a-button>
     </div>
-    <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
+    <div ref="scrollOuter" class="scroll-outer" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
       <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
         <transition-group name="taglist-moving-animation">
           <router-link
             v-for="tag in visitedViews"
-            ref="tag"
+            :ref="setTagRef"
             :key="tag.path"
             :class="isActive(tag)?'active':''"
             :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
@@ -67,7 +67,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, watch, onMounted, nextTick, unref } from 'vue'
+import { defineComponent, ref, reactive, computed, watch, onMounted, nextTick, unref, onBeforeUpdate } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
 import { tagsViewStore } from '_p/index/store/modules/tagsView'
@@ -94,25 +94,33 @@ export default defineComponent({
     let selectedTag = reactive<any>({})
     const visitedViews = computed(() => tagsViewStore.visitedViews)
     const routers = computed(() => permissionStore.routers)
-    
+
     const wrap = ref<HTMLElement | null>(null)
-    const tag = ref<HTMLElement | null>(null)
+    const tagRefs = ref<any[]>([])
     const scrollOuter = ref<HTMLElement | null>(null)
     const scrollBody = ref<HTMLElement | null>(null)
-    
+
     onMounted(() => {
       initTags()
       addTags()
     })
-    
+
+    onBeforeUpdate(() => {
+      tagRefs.value = []
+    })
+
+    function setTagRef(el: any): void {
+      tagRefs.value.push(el)
+    }
+
     function closeMenu(): void {
       visible.value = false
     }
-    
+
     function isActive(route: RouteLocationNormalizedLoaded): boolean {
       return route.path === currentRoute.value.path
     }
-    
+
     function initTags(): void {
       affixTags.value = filterAffixTags(routers.value)
       const affixTagArr: any[] = affixTags.value
@@ -123,8 +131,8 @@ export default defineComponent({
         }
       }
     }
-    
-    function filterAffixTags(routes: RouteLocationNormalizedLoaded[], basePath: string = '/'): any[] {
+
+    function filterAffixTags(routes: RouteLocationNormalizedLoaded[], basePath = '/'): any[] {
       let tags: any = []
       routes.forEach((route: any) => {
         if (route.meta && route.meta.affix) {
@@ -143,10 +151,10 @@ export default defineComponent({
           }
         }
       })
-    
+
       return tags
     }
-    
+
     function addTags(): void | boolean {
       const { name } = currentRoute.value
       if (name) {
@@ -154,19 +162,19 @@ export default defineComponent({
       }
       return false
     }
-    
+
     // function moveToCurrentTag(): void {
     //   const tags = unref(tag) as any
     //   nextTick(() => {
     //     for (const tag of tags) {
     //       if (tag.to.path === currentRoute.value.path) {
     //         this.$refs.scrollPane.moveToTarget(tag)
-    
+
     //         // when query is different then update
     //         if (tag.to.fullPath !== this.$route.fullPath) {
     //           this.$store.dispatch('updateVisitedView', this.$route)
     //         }
-    
+
     //         break
     //       }
     //     }
@@ -180,7 +188,7 @@ export default defineComponent({
       }
       handleScroll(delta)
     }
-    
+
     function handleScroll(offset: number): void {
       const outerWidth: number = (unref(scrollOuter) as any).offsetWidth
       const bodyWidth: number = (unref(scrollBody) as any).offsetWidth
@@ -199,14 +207,14 @@ export default defineComponent({
         }
       }
     }
-    
+
     function contextMenu(item: RouteLocationNormalizedLoaded, e: any) {
       const menuMinWidth = 105
       const offsetLeft: number = (unref(wrap) as any).getBoundingClientRect().left // container margin left
       const offsetWidth: number = (unref(wrap) as any).offsetWidth // container width
       const maxLeft: number = offsetWidth - menuMinWidth // left boundary
       const left: number = e.clientX - offsetLeft + 15 // 15: margin right
-      
+
       if (left > maxLeft) {
         contextMenuLeft.value = maxLeft
       } else {
@@ -216,9 +224,10 @@ export default defineComponent({
       visible.value = true
       selectedTag = item
     }
-    
+
     function moveToView() {
-      const tags = (unref(tag) as any)
+      const tags = unref(tagRefs)
+      console.log(tags.length)
       nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === currentRoute.value.path) {
@@ -236,19 +245,18 @@ export default defineComponent({
               // 标签在可视区域右侧
               tagBodyLeft.value = -(tag.offsetLeft - (outerWidth - outerPadding.value - tag.offsetWidth))
             }
-      
+
             // when query is different then update
             if (tag.to.fullPath !== currentRoute.value.fullPath) {
               tagsViewStore.updateVisitedView(currentRoute.value)
             }
-      
+
             break
           }
         }
       })
-      
     }
-    
+
     watch(
       () => currentRoute.value,
       () => {
@@ -256,7 +264,7 @@ export default defineComponent({
         moveToView()
       }
     )
-    
+
     watch(
       () => visible.value,
       (visible: boolean) => {
@@ -267,7 +275,7 @@ export default defineComponent({
         }
       }
     )
-    
+
     return {
       visible,
       selectedTag,
@@ -275,7 +283,7 @@ export default defineComponent({
       contextMenu,
       isActive,
       affixTags, visitedViews, routers,
-      wrap, tag, scrollOuter, scrollBody,
+      wrap, setTagRef, scrollOuter, scrollBody,
       handleScroll, handlescroll
     }
   }

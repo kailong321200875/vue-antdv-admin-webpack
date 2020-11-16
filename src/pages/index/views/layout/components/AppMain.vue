@@ -3,7 +3,7 @@
     <router-view v-slot="{ Component }" :key="key" class="view-main">
       <transition name="fade" mode="out-in" appear>
         <keep-alive :include="cachedViews">
-          <component :is="Component" :key="key" />
+          <component :is="Component" />
         </keep-alive>
       </transition>
     </router-view>
@@ -19,7 +19,7 @@ export default defineComponent({
   setup() {
     const { currentRoute } = useRouter()
     const cachedViews = computed(() => {
-      console.log(tagsViewStore)
+      console.log(tagsViewStore.cachedViews)
       return tagsViewStore.cachedViews
     })
     const key = computed(() => currentRoute.value.fullPath)

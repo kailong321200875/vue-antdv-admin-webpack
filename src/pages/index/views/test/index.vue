@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import { ref, defineComponent } from 'vue'
 import api from '_p/index/api'
 const { common } = api
-export default {
+export default defineComponent({
   name: 'Dashboard',
   setup() {
     const inputVal = ref<string>('')
@@ -58,7 +58,7 @@ export default {
       console.log('哈哈哈哈哈')
     }
 
-    getList()
+    // getList()
 
     return {
       inputVal,
@@ -70,7 +70,7 @@ export default {
       svgClick
     }
   }
-}
+})
 </script>
 
 <style>
