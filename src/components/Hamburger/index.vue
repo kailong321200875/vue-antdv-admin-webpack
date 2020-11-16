@@ -42,7 +42,7 @@ export default defineComponent({
 
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 ::v-deep .trigger {
   display: inline-block;
   transition: color 0.3s;

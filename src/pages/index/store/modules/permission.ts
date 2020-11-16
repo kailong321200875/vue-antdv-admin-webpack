@@ -6,8 +6,8 @@ import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-dec
 import { AppRouteRecordRaw, RouteMeta } from '_p/index/router/types'
 
 export interface PermissionState {
-  routers: AppRouteRecordRaw[],
-  addRouters: AppRouteRecordRaw[],
+  routers: AppRouteRecordRaw[]
+  addRouters: AppRouteRecordRaw[]
   isAddRouters: boolean
 }
 

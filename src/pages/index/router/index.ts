@@ -71,7 +71,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '首页',
           icon: 'dashboard',
-          noCache: true,
+          // noCache: true,
           affix: true
         }
       }
@@ -104,7 +104,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'index',
-        component: () => import('_p/index/views/dd/index.vue'),
+        // component: () => import('_p/index/views/dd/index.vue'),
         name: 'TestIndex',
         redirect: '/test/index/index2',
         meta: {
@@ -130,6 +130,241 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    path: '/components-demo',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'ComponentsDemo',
+    meta: {
+      title: '功能组件',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: 'echarts',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'EchartsDemo',
+        meta: {
+          title: '图表'
+        }
+      },
+      {
+        path: 'table',
+        redirect: 'noredirect',
+        name: 'TableDemo',
+        // component: ParentView,
+        meta: {
+          title: '表格'
+        },
+        children: [
+          {
+            path: 'table-default',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TableDefault',
+            meta: {
+              title: '普通表格'
+            }
+          },
+          {
+            path: 'table-edit',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TableEdit',
+            meta: {
+              title: '表格内编辑',
+              noCache: true
+            }
+          },
+          {
+            path: 'table-drag',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TableDrag',
+            meta: {
+              title: '表格拖拽'
+            }
+          },
+          {
+            path: 'table-slot',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TableSlot',
+            meta: {
+              title: '表格插槽'
+            }
+          },
+          {
+            path: 'table-multi',
+            component: () => import('_p/index/views/dd/index.vue'),
+            name: 'TableMulti',
+            meta: {
+              title: '多级表头'
+            }
+          }
+        ]
+      },
+      {
+        path: 'search',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'SearchDemo',
+        meta: {
+          title: '查询'
+        }
+      },
+      {
+        path: 'drag-dialog',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'DragDialogDemo',
+        meta: {
+          title: '拖拽弹窗'
+        }
+      },
+      {
+        path: 'drag-element',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'DragElement',
+        meta: {
+          title: '拖拽元素'
+        }
+      },
+      {
+        path: 'cropper',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'CropperDemo',
+        meta: {
+          title: '图片裁剪'
+        }
+      },
+      {
+        path: 'rich-text',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'EditorDemo',
+        meta: {
+          title: '富文本'
+        }
+      },
+      {
+        path: 'select-tree',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'SelectTreeDemo',
+        meta: {
+          title: '下拉树形'
+        }
+      },
+      {
+        path: 'preview-img',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'PreviewImg',
+        meta: {
+          title: '图片预览'
+        }
+      },
+      {
+        path: 'markdown-demo',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'MarkdownDemo',
+        meta: {
+          title: 'markDown编辑器'
+        }
+      }
+    ]
+  },
+  {
+    path: '/components-ui',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'ComponentsUi',
+    meta: {
+      title: 'UI组件',
+      icon: 'UI'
+    },
+    children: [
+      {
+        path: 'waves',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'WavesDemo',
+        meta: {
+          title: '水波纹'
+        }
+      },
+      {
+        path: 'ripples',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'RipplesDemo',
+        meta: {
+          title: '涟漪'
+        }
+      },
+      {
+        path: 'streamer',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'StreamerDemo',
+        meta: {
+          title: '流光'
+        }
+      }
+    ]
+  },
+  {
+    path: '/icon',
+    component: Layout,
+    name: 'Icon',
+    meta: {},
+    children: [
+      {
+        path: 'index',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'Icons',
+        meta: { title: '图标', icon: 'icon' }
+      }
+    ]
+  },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'ExampleManage',
+    meta: {
+      title: '综合实例',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'dialog',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'ExampDialog',
+        meta: {
+          title: '综合实例-弹窗'
+        }
+      },
+      {
+        path: 'page',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'ExampPage',
+        meta: {
+          title: '综合实例-页面'
+        }
+      }
+    ]
+  },
+  {
+    path: '/other',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'Other',
+    meta: {
+      title: '其他',
+      icon: 'international',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'external-link',
+        component: () => import('_p/index/views/dd/index.vue'),
+        name: 'ExternalLink',
+        meta: {
+          title: '按需引入JS'
+        }
       }
     ]
   }

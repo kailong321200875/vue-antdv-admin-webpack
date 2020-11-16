@@ -4,7 +4,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <!-- <screenfull class="right-menu-item hover-effect" /> -->
+      <screenfull class="right-menu-item hover-effect" />
 
       <a-dropdown class="avatar-container right-menu-item hover-effect" :trigger="['hover']">
         <div>
@@ -34,6 +34,7 @@
 import { defineComponent, computed } from 'vue'
 import Hamburger from '_c/Hamburger/index.vue'
 import Breadcrumb from '_c/Breadcrumb/index.vue'
+import Screenfull from '_c/Screenfull/index.vue'
 import { appStore } from '_p/index/store/modules/app'
 import { resetRouter } from '_p/index/router'
 import { useRouter } from 'vue-router'
@@ -42,7 +43,8 @@ export default defineComponent({
   name: 'Navbar',
   components: {
     Hamburger,
-    Breadcrumb
+    Breadcrumb,
+    Screenfull
   },
   setup() {
     const { replace } = useRouter()
@@ -77,7 +79,7 @@ export default defineComponent({
     cursor: pointer;
     margin-left: 15px;
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, .025);
     }
   }
   .breadcrumb-container {

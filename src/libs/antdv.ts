@@ -14,7 +14,8 @@ import {
   Layout,
   Menu,
   message,
-  Dropdown
+  Dropdown,
+  Tooltip
 } from 'ant-design-vue'
 
 message.config({
@@ -31,6 +32,7 @@ export function setupAntd(app: App<Element>): void {
   app.use(Layout)
   app.use(Menu)
   app.use(Dropdown)
+  app.use(Tooltip)
 
   app.config.globalProperties.$message = message
 }

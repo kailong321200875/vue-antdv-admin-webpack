@@ -29,6 +29,7 @@ import { ref } from 'vue'
 import api from '_p/index/api'
 const { common } = api
 export default {
+  name: 'Dashboard',
   setup() {
     const inputVal = ref<string>('')
 
