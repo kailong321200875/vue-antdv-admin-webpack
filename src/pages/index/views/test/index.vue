@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 import api from '_p/index/api'
 const { common } = api
 export default defineComponent({
@@ -53,6 +53,9 @@ export default defineComponent({
         listData.value = res.result
       }
     }
+    onMounted(() => {
+      console.log('?????')
+    })
 
     function svgClick(): void {
       console.log('哈哈哈哈哈')

@@ -1,9 +1,9 @@
 <template>
   <section class="app-main">
-    <router-view v-slot="{ Component }" :key="key" class="view-main">
+    <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in" appear>
         <keep-alive :include="cachedViews">
-          <component :is="Component" />
+          <component :is="Component" :key="route.fullPath" />
         </keep-alive>
       </transition>
     </router-view>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, unref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { tagsViewStore } from '_p/index/store/modules/tagsView'
 export default defineComponent({
@@ -19,10 +19,13 @@ export default defineComponent({
   setup() {
     const { currentRoute } = useRouter()
     const cachedViews = computed(() => {
-      console.log(tagsViewStore.cachedViews)
       return tagsViewStore.cachedViews
     })
-    const key = computed(() => currentRoute.value.fullPath)
+    const key = computed(() => {
+      console.log(tagsViewStore.cachedViews)
+      console.log(tagsViewStore.visitedViews)
+      return currentRoute.value.fullPath
+    })
     return {
       cachedViews,
       key

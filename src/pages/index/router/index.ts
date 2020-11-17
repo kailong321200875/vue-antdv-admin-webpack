@@ -31,11 +31,9 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/redirect',
     component: Layout,
-    name: 'RedirectRoot',
     children: [
       {
         path: '/redirect/:path*',
-        name: 'Redirect',
         component: () => import('_c/Redirect/index.vue'),
         meta: {}
       }
@@ -372,6 +370,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+  strict: true,
   routes: constantRouterMap as RouteRecordRaw[]
 })
 

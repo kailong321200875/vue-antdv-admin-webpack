@@ -15,8 +15,8 @@
           <slot />
         </div>
       </div>
-      <bar :move="state.moveX" :size="state.sizeWidth" />
-      <bar vertical :move="state.moveY" :size="state.sizeHeight" />
+      <bar v-if="showX" :move="state.moveX" :size="state.sizeWidth" />
+      <bar v-if="showY" vertical :move="state.moveY" :size="state.sizeHeight" />
     </template>
     <template v-else>
       <div
@@ -84,6 +84,14 @@ export default defineComponent({
     noresize: {
       type: Boolean as PropType<boolean>,
       default: false
+    },
+    showX: {
+      type: Boolean as PropType<boolean>,
+      default: true
+    },
+    showY: {
+      type: Boolean as PropType<boolean>,
+      default: true
     }
     // tag: {
     //   type: String as PropType<string>,
@@ -175,13 +183,11 @@ export default defineComponent({
 .scrollbar {
   position: relative;
   overflow: hidden;
-  width: 100%;
   height: 100%;
 
   &__wrap {
     height: 100%;
     overflow: scroll;
-    margin-bottom: 17px !important;
     overflow-x: hidden;
 
     &--hidden-default {

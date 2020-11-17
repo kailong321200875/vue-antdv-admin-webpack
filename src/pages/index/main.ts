@@ -15,7 +15,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue' // 入口组件
 
-import { setupRouter } from './router' // 路由
+import router, { setupRouter } from './router' // 路由
 
 import { setupStore } from './store' // 状态管理
 
@@ -43,4 +43,6 @@ setupAntd(app) // 引入antdv组件
 
 setupSvgIcon(app) // 全局注册svgIcon组件
 
-app.mount('#app')
+router.isReady().then(() => {
+  app.mount('#app')
+})

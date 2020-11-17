@@ -8,7 +8,7 @@
         <navbar />
       </a-layout-header>
       <a-layout-content>
-        <tags-nav style="height: 40px;" />
+        <tags-view style="height: 40px;" />
         <app-main />
       </a-layout-content>
     </a-layout>
@@ -21,14 +21,14 @@ import { appStore } from '_p/index/store/modules/app'
 import Silder from '../components/Silder/index.vue'
 import Navbar from '../components/Navbar.vue'
 import AppMain from '../components/AppMain.vue'
-import TagsNav from '_c/TagsNav/index.vue'
+import TagsView from '../components/TagsView.vue'
 export default defineComponent({
   name: 'Classic',
   components: {
     Silder,
     Navbar,
     AppMain,
-    TagsNav
+    TagsView
   },
   setup() {
     const collapsed = computed(() => appStore.collapsed)

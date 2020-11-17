@@ -1,21 +1,23 @@
 <template>
-  <div :class="{'has-logo':show_logo}">
-    <logo :collapsed="collapsed" :theme="theme" />
-    <a-menu
-      v-model:selectedKeys="selectedKeys"
-      v-model:openKeys="openKeys"
-      :theme="theme"
-      :mode="mode"
-    >
-      <sidebar-item
-        v-for="route in routers"
-        :key="filterPath(route)"
-        :item="route"
-        :base-path="route.path"
-        :active-menu-name="activeMenuName"
+  <div :class="{'has-logo':show_logo}" class="sidebar-container">
+    <logo v-if="show_logo" :collapsed="collapsed" :theme="theme" />
+    <scrollbar class="menu-wrap">
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        v-model:openKeys="openKeys"
         :theme="theme"
-      />
-    </a-menu>
+        :mode="mode"
+      >
+        <sidebar-item
+          v-for="route in routers"
+          :key="filterPath(route)"
+          :item="route"
+          :base-path="route.path"
+          :active-menu-name="activeMenuName"
+          :theme="theme"
+        />
+      </a-menu>
+    </scrollbar>
   </div>
 </template>
 
@@ -24,7 +26,7 @@ import Logo from '../../components/Logo.vue'
 import { ref, defineComponent, PropType, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
-// import Scrollbar from '_c/Scrollbar/index.vue'
+import Scrollbar from '_c/Scrollbar/index.vue'
 import SidebarItem from './SidebarItem.vue'
 import { permissionStore } from '_p/index/store/modules/permission'
 import { setSidebarItem } from './hooks/setSidebarItem'
@@ -35,7 +37,7 @@ export default defineComponent({
   name: 'Slider',
   components: {
     Logo,
-    // Scrollbar,
+    Scrollbar,
     SidebarItem
   },
   props: {
@@ -145,5 +147,18 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="less" scoped>
+.sidebar-container {
+  height: 100%;
+  .menu-wrap {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+.has-logo {
+  .menu-wrap {
+    height: calc(~"100% - 70px");
+    overflow: hidden;
+  }
+}
 </style>

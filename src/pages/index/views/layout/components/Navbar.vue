@@ -75,7 +75,6 @@ export default defineComponent({
   .hamburger-container {
     line-height: @navbarHeight;
     float: left;
-    padding: 0 10px;
     cursor: pointer;
     margin-left: 15px;
     &:hover {
