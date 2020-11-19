@@ -1,40 +1,69 @@
 <template>
   <a-layout class="app-wrapper">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <silder :collapsed="collapsed" />
+    <a-layout-sider
+      v-model:collapsed="collapsed"
+      :trigger="null"
+      collapsible
+      :class="'ant-layout-sider--' + theme"
+    >
+      <logo
+        v-if="show_logo"
+        :collapsed="collapsed"
+        :theme="theme"
+      />
+      <silder
+        :collapsed="collapsed"
+        :theme="theme"
+      />
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0">
+      <a-layout-header>
         <navbar />
       </a-layout-header>
-      <a-layout-content>
-        <tags-view style="height: 40px;" />
-        <app-main />
+      <a-layout-content :class="{'layout-content-has-tags':has_tags}">
+        <scrollbar class="main-wrap">
+          <tags-view :class="{'has-tags':has_tags}" />
+          <app-main class="classic-module--wrap" />
+        </scrollbar>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, PropType } from 'vue'
 import { appStore } from '_p/index/store/modules/app'
 import Silder from '../components/Silder/index.vue'
 import Navbar from '../components/Navbar.vue'
 import AppMain from '../components/AppMain.vue'
 import TagsView from '../components/TagsView.vue'
+import Logo from '../components/Logo.vue'
+import Scrollbar from '_c/Scrollbar/index.vue'
+import config from '_p/index/config'
+const { show_logo, has_tags, theme } = config
 export default defineComponent({
   name: 'Classic',
   components: {
     Silder,
     Navbar,
     AppMain,
-    TagsView
+    TagsView,
+    Logo,
+    Scrollbar
+  },
+  props: {
+    theme: {
+      type: String as PropType<'light' | 'dark'>,
+      default: theme
+    }
   },
   setup() {
     const collapsed = computed(() => appStore.collapsed)
 
     return {
-      collapsed
+      collapsed,
+      show_logo,
+      has_tags
     }
   }
 })
@@ -44,5 +73,33 @@ export default defineComponent({
 ::v-deep .ant-layout-header {
   line-height: @navbarHeight;
   height: @navbarHeight;
+  position: fixed;
+  top: 0;
+  left: @menuWidth;
+  width: calc(~"100% - @{menuWidth}");
+  padding: 0;
+  background: #fff;
+}
+::v-deep .ant-layout-sider--light {
+  background: @menuLightBg;
+}
+::v-deep .ant-layout-sider--dark {
+  background: @menuBg;
+}
+::v-deep .ant-layout-content {
+  margin-top: @navbarHeight;
+  .mian-wrap {
+    background-color: @contentBg;
+  }
+}
+.layout-content-has-tags {
+  margin-top: @navbarHeight + @tagsViewHeight;
+}
+.has-tags {
+  position: fixed;
+  top: @navbarHeight;
+  left: @menuWidth;
+  width: calc(~"100% - @{menuWidth}");
+  z-index: 20;
 }
 </style>

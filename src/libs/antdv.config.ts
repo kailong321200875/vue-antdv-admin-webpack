@@ -7,7 +7,7 @@ const antdvConfig: ConfigAntdv = {
   /**
    * message 顶部距离
    */
-  message_top: '100px',
+  message_top: 100,
 
   /**
    * message 多久消失

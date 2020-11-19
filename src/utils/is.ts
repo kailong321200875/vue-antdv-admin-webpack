@@ -9,3 +9,15 @@ export const isWindow = (val: any): val is Window => {
 export function isString(val: unknown): val is string {
   return is(val, 'String')
 }
+
+export const isDef = <T = unknown>(val?: T): val is T => {
+  return typeof val !== 'undefined'
+}
+
+export const isUnDef = <T = unknown>(val?: T): val is T => {
+  return !isDef(val)
+}
+
+export const isFunction = (val: unknown): val is Function => typeof val === 'function'
+
+export const isServer = typeof window === 'undefined'

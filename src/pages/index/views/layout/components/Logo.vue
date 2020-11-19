@@ -49,7 +49,8 @@ export default defineComponent({
   align-items: center;
   padding-left: 18px;
   cursor: pointer;
-  height: 70px;
+  height: @topSilderHeight;
+  max-width: 200px;
   img {
     width: 37px;
     height: 37px;

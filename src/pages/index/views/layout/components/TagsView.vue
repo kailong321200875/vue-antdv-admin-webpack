@@ -1,5 +1,10 @@
 <template>
   <div ref="wrapper" class="tags-view-container">
+    <span class="move-btn prev-btn">
+      <a-button @click="move(-200)">
+        <template #icon><LeftOutlined /></template>
+      </a-button>
+    </span>
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
       <router-link
         v-for="tag in visitedViews"
@@ -16,6 +21,11 @@
         <CloseOutlined v-if="!tag.meta.affix" class="icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
+    <span class="move-btn next-btn">
+      <a-button @click="move(200)">
+        <template #icon><RightOutlined /></template>
+      </a-button>
+    </span>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">
         刷新
@@ -47,7 +57,9 @@ export default defineComponent({
   name: 'TagsView',
   components: {
     ScrollPane,
-    CloseOutlined
+    CloseOutlined,
+    LeftOutlined,
+    RightOutlined
   },
   setup() {
     const { currentRoute, push, replace } = useRouter()
@@ -178,15 +190,15 @@ export default defineComponent({
       const menuMinWidth = 105
       const offsetLeft: number = (unref(wrapper) as any).getBoundingClientRect().left // container margin left
       const offsetWidth: number = (unref(wrapper) as any).offsetWidth // container width
-      const maxLeft: number = offsetWidth + offsetLeft - menuMinWidth// left boundary
-      const itemLeft: number = e.clientX + 15 // 15: margin right
+      const maxLeft: number = offsetWidth - menuMinWidth// left boundary
+      const itemLeft: number = e.clientX - offsetLeft + 4
 
       if (itemLeft > maxLeft) {
         left.value = maxLeft
       } else {
         left.value = itemLeft
       }
-      top.value = e.clientY
+      top.value = e.offsetY
 
       visible.value = true
       selectedTag.value = tag
@@ -194,6 +206,10 @@ export default defineComponent({
 
     function closeMenu() {
       visible.value = false
+    }
+
+    function move(to: number) {
+      (unref(scrollPane) as any).moveTo(to)
     }
 
     onMounted(() => {
@@ -237,7 +253,8 @@ export default defineComponent({
       closeAllTags,
       toLastView,
       openMenu,
-      closeMenu
+      closeMenu,
+      move
     }
   }
 })
@@ -245,12 +262,35 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .tags-view-container {
-  height: 34px;
+  height: @tagsViewHeight;
   width: 100%;
   background: #fff;
-  border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  position: relative;
+  display: flex;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    border-top: #d8dce5;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+  .move-btn {
+    display: inline-block;
+    width: @tagsViewHeight;
+    height: @tagsViewHeight;
+    line-height: @tagsViewHeight;
+    text-align: center;
+    ::v-deep .ant-btn {
+      width: @tagsViewHeight;
+      height: @tagsViewHeight;
+      line-height: @tagsViewHeight;
+    }
+  }
   .tags-view-wrapper {
+    width: calc(~"100% - 78px");
     .tags-view-item {
       display: inline-block;
       position: relative;
@@ -263,11 +303,8 @@ export default defineComponent({
       padding: 0 8px;
       font-size: 12px;
       margin-left: 5px;
-      &:first-of-type {
-        margin-left: 15px;
-      }
       &:last-of-type {
-        margin-right: 15px;
+        margin-right: 4px;
       }
       &.active {
         background-color: #304156;
@@ -329,7 +366,7 @@ export default defineComponent({
   }
 }
 ::v-deep .scrollbar__view {
-  height: 39px;
-  line-height: 39px;
+  height: @tagsViewHeight;
+  line-height: @tagsViewHeight;
 }
 </style>

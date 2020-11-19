@@ -3,15 +3,16 @@
     ref="scrollContainer"
     :show-x="false"
     class="scroll-container"
-    @wheel.prevent="handleScroll"
+    @wheel="handleScroll"
   >
     <slot />
   </scrollbar>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, unref } from 'vue'
+import { defineComponent, ref, unref, nextTick } from 'vue'
 import Scrollbar from '_c/Scrollbar/index.vue'
+import { useScrollTo } from './hooks/useScrollTo'
 const tagAndTagSpacing = 4 // tagAndTagSpacing
 
 export default defineComponent({
@@ -20,7 +21,6 @@ export default defineComponent({
     Scrollbar
   },
   setup() {
-    const left = ref<number>(0)
     const scrollContainer = ref<HTMLElement | null>(null)
 
     function handleScroll(e: any): void {
@@ -60,17 +60,44 @@ export default defineComponent({
         const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
 
         if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
-          $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth
+          nextTick(() => {
+            const { start } = useScrollTo({
+              el: $scrollWrapper,
+              to: afterNextTagOffsetLeft - $containerWidth,
+              duration: 500
+            })
+            start()
+          })
         } else if (beforePrevTagOffsetLeft < $scrollWrapper.scrollLeft) {
-          $scrollWrapper.scrollLeft = beforePrevTagOffsetLeft
+          nextTick(() => {
+            const { start } = useScrollTo({
+              el: $scrollWrapper,
+              to: beforePrevTagOffsetLeft,
+              duration: 500
+            })
+            start()
+          })
         }
       }
     }
+
+    function moveTo(to: number) {
+      const $scrollWrapper: any = (unref(scrollContainer) as any).$.wrap
+      nextTick(() => {
+        const { start } = useScrollTo({
+          el: $scrollWrapper,
+          to: $scrollWrapper.scrollLeft + to,
+          duration: 500
+        })
+        start()
+      })
+    }
+
     return {
-      left,
-      scrollContainer,
       handleScroll,
-      moveToTarget
+      scrollContainer,
+      moveToTarget,
+      moveTo
     }
   }
 })
@@ -85,8 +112,8 @@ export default defineComponent({
     .el-scrollbar__bar {
       bottom: 0px;
     }
-    .el-scrollbar__wrap {
-      height: 49px;
-    }
+    // .el-scrollbar__wrap {
+    //   height: 49px;
+    // }
 }
 </style>

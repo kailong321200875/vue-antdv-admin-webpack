@@ -5,15 +5,21 @@
 </template>
 
 <script lang="ts">
-import ClassicModule from './modules/Classic.vue'
+import Classic from './modules/Classic.vue'
+import Top from './modules/Top.vue'
+import LeftTop from './modules/LeftTop.vue'
 import { defineComponent, ref } from 'vue'
+import config from '_p/index/config'
 export default defineComponent({
   name: 'Layout',
   components: {
-    ClassicModule
+    Classic,
+    Top,
+    LeftTop
   },
   setup() {
-    const component = ref<string>('ClassicModule')
+    const { layout } = config
+    const component = ref<string>(layout)
     return {
       component
     }

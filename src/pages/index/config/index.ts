@@ -10,11 +10,6 @@ const config: ConfigOptions = {
   title: 'vue-antdv-admin',
 
   /**
-   * 是否固定头部
-   */
-  affix_header: true,
-
-  /**
    * 是否显示标签页
    */
   has_tags: true,
@@ -30,9 +25,14 @@ const config: ConfigOptions = {
   logo_title: 'vue-antdv-admin',
 
   /**
-   * 横纵布局 horizontal(水平) vertical(垂直)
+   * 横纵布局 Classic(经典) Top(头部) LeftTop(左侧顶部)
    */
-  // layout: 'vertical',
+  layout: 'LeftTop',
+
+  /**
+   * 主题色 light(明亮) dark(暗黑)
+   */
+  theme: 'dark',
 
   /**
    * api请求基础路径

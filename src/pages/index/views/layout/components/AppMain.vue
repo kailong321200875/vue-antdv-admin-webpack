@@ -11,24 +11,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, unref, toRaw } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, computed } from 'vue'
 import { tagsViewStore } from '_p/index/store/modules/tagsView'
 export default defineComponent({
   name: 'AppMain',
   setup() {
-    const { currentRoute } = useRouter()
-    const cachedViews = computed(() => {
-      return tagsViewStore.cachedViews
-    })
-    const key = computed(() => {
-      console.log(tagsViewStore.cachedViews)
-      console.log(tagsViewStore.visitedViews)
-      return currentRoute.value.fullPath
-    })
+    const cachedViews = computed(() => tagsViewStore.cachedViews)
     return {
-      cachedViews,
-      key
+      cachedViews
     }
   }
 })
@@ -36,14 +26,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .app-main {
-  // min-height: calc(100vh - 50px);
-  // position: relative;
   overflow: hidden;
-  background-color: #f5f7f9;
-
-  .view-main {
-    padding: 20px;
-    // position: relative;
-  }
+  padding: 20px;
 }
 </style>

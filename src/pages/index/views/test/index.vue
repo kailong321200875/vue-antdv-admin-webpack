@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onMounted } from 'vue'
+import { ref, defineComponent } from 'vue'
 import api from '_p/index/api'
 const { common } = api
 export default defineComponent({
@@ -37,7 +37,7 @@ export default defineComponent({
       inputVal.value = '我是点击事件改变的！'
     }
 
-    const inputSearch = (val: string): void => {
+    const inputSearch = (): void => {
       changeInputVal()
     }
 
@@ -53,9 +53,6 @@ export default defineComponent({
         listData.value = res.result
       }
     }
-    onMounted(() => {
-      console.log('?????')
-    })
 
     function svgClick(): void {
       console.log('哈哈哈哈哈')

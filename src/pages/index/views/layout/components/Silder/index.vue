@@ -1,6 +1,5 @@
 <template>
   <div :class="{'has-logo':show_logo}" class="sidebar-container">
-    <logo v-if="show_logo" :collapsed="collapsed" :theme="theme" />
     <scrollbar class="menu-wrap">
       <a-menu
         v-model:selectedKeys="selectedKeys"
@@ -22,7 +21,6 @@
 </template>
 
 <script lang="ts">
-import Logo from '../../components/Logo.vue'
 import { ref, defineComponent, PropType, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
@@ -32,11 +30,9 @@ import { permissionStore } from '_p/index/store/modules/permission'
 import { setSidebarItem } from './hooks/setSidebarItem'
 import config from '_p/index/config'
 const { show_logo } = config
-
 export default defineComponent({
   name: 'Slider',
   components: {
-    Logo,
     Scrollbar,
     SidebarItem
   },
@@ -139,9 +135,9 @@ export default defineComponent({
     return {
       activeMenuName,
       selectedKeys, openKeys, routers,
-      show_logo,
       onlyOneChild, hasOneShowingChild, resolvePath,
-      filterPath
+      filterPath,
+      show_logo
     }
   }
 })
@@ -150,15 +146,12 @@ export default defineComponent({
 <style lang="less" scoped>
 .sidebar-container {
   height: 100%;
-  .menu-wrap {
-    height: 100%;
-    overflow: hidden;
-  }
 }
 .has-logo {
-  .menu-wrap {
-    height: calc(~"100% - 70px");
-    overflow: hidden;
-  }
+  height: calc(~"100% - @{topSilderHeight}");
+}
+.menu-wrap {
+  height: 100%;
+  overflow: hidden;
 }
 </style>
