@@ -29,7 +29,7 @@ export default defineComponent({
         if (!collapsed) {
           setTimeout(() => {
             show.value = !collapsed
-          }, 200)
+          }, 400)
         } else {
           show.value = !collapsed
         }

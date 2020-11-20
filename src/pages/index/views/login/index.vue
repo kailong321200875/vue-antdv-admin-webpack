@@ -145,6 +145,9 @@ export default defineComponent({
     }
     .login-form {
       margin-top: 20px;
+      @{deep} .ant-form-item-control-wrapper {
+        width: 100%;
+      }
     }
     .svg-container {
       color: #889aa4;
@@ -154,9 +157,6 @@ export default defineComponent({
     }
     .form--input {
       width: 100%;
-      ::v-deep .ant-input {
-        padding-left: 35px;
-      }
     }
     .login--button {
       width: 100%;

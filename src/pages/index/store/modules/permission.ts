@@ -20,17 +20,16 @@ class App extends VuexModule implements PermissionState {
   @Mutation
   private SET_ROUTERS(routers: AppRouteRecordRaw[]): void {
     const flatRoutes: AppRouteRecordRaw[] = getFlatRoutes(deepClone(asyncRouterMap, ['component']))
-    this.addRouters = flatRoutes
-    // this.addRouters = routers
-    // .concat([{
-    //   path: '/:path(.*)*',
-    //   redirect: '/404',
-    //   meta: {
-    //     hidden: true
-    //   }
-    // }])
+    this.addRouters = flatRoutes.concat([{
+      path: '/:path(.*)*',
+      redirect: '/404',
+      name: '404',
+      meta: {
+        hidden: true,
+        breadcrumb: false
+      }
+    }])
     this.routers = deepClone(constantRouterMap, ['component']).concat(routers)
-    // this.routers = constantRouterMap.concat(routers)
   }
   @Mutation
   private SET_ISADDROUTERS(state: boolean): void {
@@ -42,7 +41,6 @@ class App extends VuexModule implements PermissionState {
     return new Promise(resolve => {
       const routerMap: AppRouteRecordRaw[] = generateRoutes(deepClone(asyncRouterMap, ['component']))
       this.SET_ROUTERS(routerMap)
-      // this.SET_ROUTERS(asyncRouterMap)
       resolve()
     })
   }

@@ -63,7 +63,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.ant-layout-header {
+@{deep} .ant-layout-header {
   height: @topSilderHeight;
   display: flex;
   flex-direction: row;
@@ -79,7 +79,7 @@ export default defineComponent({
   &--dark {
     background: @menuBg;
     .screenfull-item,
-    ::v-deep .name-item {
+    .name-item {
       color: #fff;
     }
   }
@@ -87,9 +87,14 @@ export default defineComponent({
     flex: 1;
     margin: 0 50px;
     height: 100% !important;
-    ::v-deep .ant-menu-horizontal {
+    .ant-menu-horizontal {
       height: @topSilderHeight;
       line-height: @topSilderHeight;
+      border-bottom: 0;
+    }
+    .ant-menu-light {
+      height: calc(~"@{topSilderHeight} - 4px");
+      line-height: calc(~"@{topSilderHeight} - 4px");
     }
   }
   .right-menu {
@@ -99,13 +104,10 @@ export default defineComponent({
     }
     .avatar-container {
       margin-right: 0;
-      ::v-deep .avatar-wrapper {
-        height: 100%;
-      }
     }
   }
 }
-::v-deep .ant-layout-content {
+.ant-layout-content {
   margin-top: @topSilderHeight;
   height: calc(~"100vh - @{topSilderHeight}");
   .main-wrap {

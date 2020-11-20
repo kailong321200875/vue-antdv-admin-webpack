@@ -4,7 +4,6 @@
       <a-menu-item
         :key="resolvePath(basePath, onlyOneChild.path)"
         v-bind="$attrs"
-        @click="handleMenuClick(basePath, onlyOneChild)"
       >
         <item
           v-if="onlyOneChild.meta"
@@ -42,10 +41,8 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
-import { useRouter } from 'vue-router'
 import Item from './Item.vue'
 import { setSidebarItem } from './hooks/setSidebarItem'
-import { isExternal } from '@/utils/validate'
 import { findIndex } from '@/utils'
 import { permissionStore } from '_p/index/store/modules/permission'
 
@@ -71,31 +68,18 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { push } = useRouter()
     const { onlyOneChild, hasOneShowingChild, resolvePath, treeFindRouter, getFullPath } = setSidebarItem()
     const highlightMenu = computed(() => {
       return function(className: string): string {
         const parentRoute: RouteRecordRaw[] = treeFindRouter(permissionStore.routers, (data: any) => data.name === props.activeMenuName)
         const parentFullPath: string[] = getFullPath(parentRoute.map((v: RouteRecordRaw) => v.path))
-        return findIndex(parentFullPath, (item: string) => item === props.basePath) !== -1 ? className : ''
+        return findIndex(parentFullPath, (item: string) => item === props.basePath) === parentFullPath.length - 1 ? className : ''
       }
     })
-    function handleMenuClick(basePath: string, route: RouteRecordRaw) {
-      if (isExternal(route.path)) {
-        window.open(route.path)
-      } else {
-        push({ path: resolvePath(basePath, route.path) })
-      }
-    }
-    function titleClick(item: any) {
-      console.log(item)
-    }
 
     return {
       highlightMenu,
-      handleMenuClick,
-      onlyOneChild, hasOneShowingChild, resolvePath,
-      titleClick
+      onlyOneChild, hasOneShowingChild, resolvePath
     }
   }
 })

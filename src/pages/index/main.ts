@@ -25,15 +25,11 @@ import { setupAntd } from '@/libs/antdv' // antdv UI
 
 import { setupSvgIcon } from '@/assets/icons' // svg图标
 
-import Scrollbar from '_c/Scrollbar/index.vue'
-
 import '@/styles/reset.css' // 重置不同浏览器之间的标签默认样式
 
 import '@/styles/index.less'
 
 const app = createApp(App)
-
-app.component('Scrollbar', Scrollbar)
 
 setupRouter(app) // 引入路由
 

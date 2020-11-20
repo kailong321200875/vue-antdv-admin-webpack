@@ -1,162 +1,17 @@
 <template>
   <div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
-    <input type="text">
-    <div class="scroll-wrap">
-      <scrollbar class="mt-4">
-        <ul class="p-3" style="width: 1200px;">
-          <template v-for="index in 100" :key="index">
-            <li class="p-2" :style="{ border: '1px solid #eee' }">{{ index }}</li>
-          </template>
-        </ul>
-      </scrollbar>
-    </div>
+    <count-to :start-val="0" :end-val="2000" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import CountTo from '_c/CountTo/index.vue'
 export default defineComponent({
-  name: 'Dd'
+  name: 'Dd',
+  components: {
+    CountTo
+  }
 })
 </script>
 

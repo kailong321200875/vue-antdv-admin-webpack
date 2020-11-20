@@ -22,6 +22,7 @@
         :trigger="null"
         collapsible
         :class="'ant-layout-sider--' + theme"
+        class="sidebar-container-wrap"
       >
         <silder
           :collapsed="collapsed"
@@ -98,7 +99,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.ant-layout-header {
+@{deep} .ant-layout-header {
   height: @topSilderHeight;
   display: flex;
   flex-direction: row;
@@ -110,12 +111,11 @@ export default defineComponent({
   z-index: 20;
   &--light {
     background: @menuLightBg;
-    // border-bottom: 1px solid #f0f0f0;
   }
   &--dark {
     background: @menuBg;
     .screenfull-item,
-    ::v-deep .name-item {
+    .name-item {
       color: #fff;
     }
   }
@@ -123,9 +123,14 @@ export default defineComponent({
     flex: 1;
     margin: 0 50px;
     height: 100% !important;
-    ::v-deep .ant-menu-horizontal {
+    .ant-menu-horizontal {
       height: @topSilderHeight;
       line-height: @topSilderHeight;
+      border-bottom: 0;
+    }
+    .ant-menu-light {
+      height: calc(~"@{topSilderHeight} - 4px");
+      line-height: calc(~"@{topSilderHeight} - 2px");
     }
   }
   .right-menu {
@@ -135,24 +140,31 @@ export default defineComponent({
     }
     .avatar-container {
       margin-right: 0;
-      ::v-deep .avatar-wrapper {
-        height: 100%;
-      }
     }
   }
+}
+.ant-layout-sider--light {
+  background: @menuLightBg;
+}
+.ant-layout-sider--dark {
+  background: @menuBg;
 }
 .layout-content {
   margin-top: @topSilderHeight;
   height: calc(~"100vh - @{topSilderHeight}");
   .navbar-wrap {
-    height: @navbarHeight;
     background: #fff;
-    display: flex;
     padding: 0 20px;
-    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    height: @navbarHeight;
+    line-height: @navbarHeight;
+    display: flex;
   }
-  .mian-wrap {
-    background-color: @contentBg;
+  .layout-content-has-tags {
+    margin-top: @tagsViewHeight;
+    .mian-wrap {
+      background-color: @contentBg;
+    }
   }
   .left-sider-wrap {
     height: 100%;

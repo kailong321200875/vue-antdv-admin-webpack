@@ -27,7 +27,7 @@ const config: ConfigOptions = {
   /**
    * 横纵布局 Classic(经典) Top(头部) LeftTop(左侧顶部)
    */
-  layout: 'LeftTop',
+  layout: 'Classic',
 
   /**
    * 主题色 light(明亮) dark(暗黑)

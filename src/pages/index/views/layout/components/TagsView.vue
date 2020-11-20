@@ -131,7 +131,7 @@ export default defineComponent({
       const tags = unref(tagRefs)
       nextTick(() => {
         for (const tag of tags) {
-          if (tag.to.path === currentRoute.value.path) {
+          if (tag && tag.to.path === currentRoute.value.path) {
             (unref(scrollPane) as any).moveToTarget(tag)
             // when query is different then update
             if (tag.to.fullPath !== currentRoute.value.fullPath) {
@@ -283,7 +283,7 @@ export default defineComponent({
     height: @tagsViewHeight;
     line-height: @tagsViewHeight;
     text-align: center;
-    ::v-deep .ant-btn {
+    @{deep} .ant-btn {
       width: @tagsViewHeight;
       height: @tagsViewHeight;
       line-height: @tagsViewHeight;
@@ -365,7 +365,7 @@ export default defineComponent({
     }
   }
 }
-::v-deep .scrollbar__view {
+@{deep} .scrollbar__view {
   height: @tagsViewHeight;
   line-height: @tagsViewHeight;
 }

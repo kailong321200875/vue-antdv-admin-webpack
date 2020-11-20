@@ -21,3 +21,7 @@ export const isUnDef = <T = unknown>(val?: T): val is T => {
 export const isFunction = (val: unknown): val is Function => typeof val === 'function'
 
 export const isServer = typeof window === 'undefined'
+
+export function isNumber(val: unknown): val is number {
+  return is(val, 'Number')
+}

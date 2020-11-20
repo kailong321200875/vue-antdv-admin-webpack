@@ -6,6 +6,7 @@
         v-model:openKeys="openKeys"
         :theme="theme"
         :mode="mode"
+        @click="handleMenuClick"
       >
         <sidebar-item
           v-for="route in routers"
@@ -28,6 +29,7 @@ import Scrollbar from '_c/Scrollbar/index.vue'
 import SidebarItem from './SidebarItem.vue'
 import { permissionStore } from '_p/index/store/modules/permission'
 import { setSidebarItem } from './hooks/setSidebarItem'
+import { isExternal } from '@/utils/validate'
 import config from '_p/index/config'
 const { show_logo } = config
 export default defineComponent({
@@ -59,7 +61,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { currentRoute } = useRouter()
+    const { currentRoute, push } = useRouter()
     const { onlyOneChild, hasOneShowingChild, resolvePath, treeFindRouter, getFullPath } = setSidebarItem()
     const routers = computed((): RouteRecordRaw[] => {
       return permissionStore.routers
@@ -132,12 +134,21 @@ export default defineComponent({
       }
     }
 
+    function handleMenuClick({ key }: any) {
+      if (isExternal(key)) {
+        window.open(key)
+      } else {
+        push({ path: key })
+      }
+    }
+
     return {
       activeMenuName,
       selectedKeys, openKeys, routers,
       onlyOneChild, hasOneShowingChild, resolvePath,
       filterPath,
-      show_logo
+      show_logo,
+      handleMenuClick
     }
   }
 })

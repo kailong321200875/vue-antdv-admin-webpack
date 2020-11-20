@@ -1,6 +1,6 @@
 import { isFunction, isUnDef } from '@/utils/is'
 import { ref, unref } from 'vue'
-import { requestAnimationFrame } from './animation'
+import { requestAnimationFrame } from '@/utils/animation'
 
 export interface ScrollToParams {
   el: HTMLElement

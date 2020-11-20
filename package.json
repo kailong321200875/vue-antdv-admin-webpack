@@ -19,6 +19,7 @@
     "ant-design-vue": "2.0.0-rc.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
     "lodash-es": "^4.17.15",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
@@ -32,6 +33,7 @@
     "web-storage-cache": "^1.1.1"
   },
   "devDependencies": {
+    "@types/echarts": "^4.9.1",
     "@types/lodash-es": "^4.17.3",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",

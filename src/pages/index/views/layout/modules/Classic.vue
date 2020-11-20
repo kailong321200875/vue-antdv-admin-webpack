@@ -5,6 +5,7 @@
       :trigger="null"
       collapsible
       :class="'ant-layout-sider--' + theme"
+      class="sidebar-container-wrap"
     >
       <logo
         v-if="show_logo"
@@ -17,12 +18,12 @@
       />
     </a-layout-sider>
     <a-layout>
-      <a-layout-header>
+      <a-layout-header :class="{'ant-layout-header-collapsed': collapsed}">
         <navbar />
       </a-layout-header>
       <a-layout-content :class="{'layout-content-has-tags':has_tags}">
         <scrollbar class="main-wrap">
-          <tags-view :class="{'has-tags':has_tags}" />
+          <tags-view :class="{'has-tags':has_tags, 'has-tags-collapsed': collapsed && has_tags}" />
           <app-main class="classic-module--wrap" />
         </scrollbar>
       </a-layout-content>
@@ -70,7 +71,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-::v-deep .ant-layout-header {
+@{deep} .ant-layout-header {
   line-height: @navbarHeight;
   height: @navbarHeight;
   position: fixed;
@@ -79,14 +80,15 @@ export default defineComponent({
   width: calc(~"100% - @{menuWidth}");
   padding: 0;
   background: #fff;
+  transition: all 0.2s;
 }
-::v-deep .ant-layout-sider--light {
+.ant-layout-sider--light {
   background: @menuLightBg;
 }
-::v-deep .ant-layout-sider--dark {
+.ant-layout-sider--dark {
   background: @menuBg;
 }
-::v-deep .ant-layout-content {
+.ant-layout-content {
   margin-top: @navbarHeight;
   .mian-wrap {
     background-color: @contentBg;
@@ -100,6 +102,11 @@ export default defineComponent({
   top: @navbarHeight;
   left: @menuWidth;
   width: calc(~"100% - @{menuWidth}");
-  z-index: 20;
+  transition: all 0.2s;
+}
+.ant-layout-header-collapsed,
+.has-tags-collapsed {
+  left: 80px;
+  width: calc(~"100% - 80px");
 }
 </style>

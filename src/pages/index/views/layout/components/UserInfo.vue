@@ -50,6 +50,7 @@ export default defineComponent({
   .avatar-wrapper {
     display: flex;
     align-items: center;
+    height: 100%;
     cursor: pointer;
     .user-avatar {
       width: 30px;
