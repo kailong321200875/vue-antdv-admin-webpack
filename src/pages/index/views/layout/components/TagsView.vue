@@ -268,6 +268,7 @@ export default defineComponent({
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
   position: relative;
   display: flex;
+  z-index: 100;
   &::after {
     content: "";
     width: 100%;
@@ -346,7 +347,7 @@ export default defineComponent({
   .contextmenu {
     margin: 0;
     background: #fff;
-    z-index: 100;
+    z-index: 200;
     position: absolute;
     list-style-type: none;
     padding: 5px 0;

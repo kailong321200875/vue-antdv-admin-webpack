@@ -1,12 +1,13 @@
 <template>
   <div
+    ref="chartRef"
     :class="className"
     :style="{height:height,width:width}"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, onActivated, PropType, onMounted, onBeforeMount, unref, watch, ref, nextTick, getCurrentInstance } from 'vue'
+import { defineComponent, onActivated, PropType, onMounted, onBeforeMount, unref, ref, watch, nextTick } from 'vue'
 import { debounce } from 'lodash-es'
 import type { EChartOption, ECharts } from 'echarts'
 import echarts from 'echarts'
@@ -33,9 +34,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { proxy } = getCurrentInstance() as any
-    // console.log(item)
-    // const chartRef = ref<HTMLCanvasElement | null>(null)
+    const chartRef = ref<HTMLCanvasElement | null>(null)
     let chart: ECharts | null = null
     let sidebarElm: HTMLElement | any = null
     let __resizeHandler: Function | null = null
@@ -55,7 +54,10 @@ export default defineComponent({
     )
 
     onMounted(() => {
-      initChart()
+      // 设置异步，不然图例一开始的宽度不正确。
+      setTimeout(() => {
+        initChart()
+      }, 10)
       __resizeHandler = debounce(() => {
         if (chart) {
           chart.resize()
@@ -81,9 +83,9 @@ export default defineComponent({
 
     function initChart(): void {
       // 初始化echart
-      // const chartRefWrap = unref(chartRef)
-      if (proxy.$el) {
-        chart = echarts.init(proxy.$el, 'tdTheme')
+      const chartRefWrap = unref(chartRef)
+      if (chartRefWrap) {
+        chart = echarts.init(chartRefWrap, 'tdTheme')
         chart.setOption(props.options as EChartOption, true)
       }
     }
@@ -96,7 +98,9 @@ export default defineComponent({
       }
     }
 
-    return {}
+    return {
+      chartRef
+    }
   }
 })
 </script>

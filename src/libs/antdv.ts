@@ -17,7 +17,8 @@ import {
   Dropdown,
   Tooltip,
   Row,
-  Col
+  Col,
+  Alert
 } from 'ant-design-vue'
 
 message.config({
@@ -37,6 +38,7 @@ export function setupAntd(app: App<Element>): void {
   app.use(Tooltip)
   app.use(Row)
   app.use(Col)
+  app.use(Alert)
 
   app.config.globalProperties.$message = message
 }

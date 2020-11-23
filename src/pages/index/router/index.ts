@@ -96,22 +96,30 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
 
 export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
-    path: '/other',
+    path: '/components-demo',
     component: Layout,
-    redirect: 'noredirect',
-    name: 'Other',
+    redirect: '/components-demo/echarts',
+    name: 'ComponentsDemo',
     meta: {
-      title: '其他',
-      icon: 'international',
+      title: '功能组件',
+      icon: 'component',
       alwaysShow: true
     },
     children: [
       {
-        path: 'external-link',
-        component: () => import('_p/index/views/dd/index.vue'),
-        name: 'ExternalLink',
+        path: 'echarts',
+        component: () => import('_p/index/views/components-demo/echarts/index.vue'),
+        name: 'EchartsDemo',
         meta: {
-          title: '按需引入JS'
+          title: '图表'
+        }
+      },
+      {
+        path: 'preview',
+        component: () => import('_p/index/views/components-demo/preview/index.vue'),
+        name: 'PreviewDemo',
+        meta: {
+          title: '图片预览'
         }
       }
     ]

@@ -25,3 +25,11 @@ export const isServer = typeof window === 'undefined'
 export function isNumber(val: unknown): val is number {
   return is(val, 'Number')
 }
+
+export const isFirefox = function() {
+  return !!window.navigator.userAgent.match(/firefox/i)
+}
+
+export const isClient = () => {
+  return typeof window !== 'undefined'
+}
