@@ -12,7 +12,7 @@ export interface PermissionState {
 }
 
 @Module({ dynamic: true, namespaced: true, store, name: 'permission' })
-class App extends VuexModule implements PermissionState {
+class Permission extends VuexModule implements PermissionState {
   public routers = [] as any[]
   public addRouters = [] as any[]
   public isAddRouters = false
@@ -106,4 +106,4 @@ function generateRoutes(routes: AppRouteRecordRaw[]): AppRouteRecordRaw[] {
   return res
 }
 
-export const permissionStore = getModule<App>(App)
+export const permissionStore = getModule<Permission>(Permission)

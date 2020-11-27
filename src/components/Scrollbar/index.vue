@@ -200,7 +200,7 @@ export default defineComponent({
     }
   }
 
-  ::v-deep &__thumb {
+  @{deep}(&__thumb) {
     position: relative;
     display: block;
     width: 0;

@@ -43,13 +43,13 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-::v-deep .trigger {
+.trigger {
   display: inline-block;
   transition: color 0.3s;
   height: @navbarHeight;
   line-height: @navbarHeight;
 }
-::v-deep .trigger:hover {
+.trigger:hover {
   color: #1890ff;
 }
 </style>

@@ -1,4 +1,7 @@
-import { upperFirst } from 'lodash-es'
+import { isServer } from './is'
+const ieVersion = isServer ? 0 : Number((document as any).documentMode)
+const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g
+const MOZ_HACK_REGEXP = /^moz([A-Z])/
 
 export interface ViewportOffsetResult {
   left: number
@@ -9,15 +12,18 @@ export interface ViewportOffsetResult {
   bottomIncludeBody: number
 }
 
-export function getBoundingClientRect(element: Element): DOMRect | number {
-  if (!element || !element.getBoundingClientRect) {
-    return 0
-  }
-  return element.getBoundingClientRect()
-}
+/* istanbul ignore next */
 const trim = function(string: string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '')
 }
+
+/* istanbul ignore next */
+const camelCase = function(name: string) {
+  return name.replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+    return offset ? letter.toUpperCase() : letter
+  }).replace(MOZ_HACK_REGEXP, 'Moz$1')
+}
+
 /* istanbul ignore next */
 export function hasClass(el: Element, cls: string) {
   if (!el || !cls) return false
@@ -28,6 +34,7 @@ export function hasClass(el: Element, cls: string) {
     return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1
   }
 }
+
 /* istanbul ignore next */
 export function addClass(el: Element, cls: string) {
   if (!el) return
@@ -69,6 +76,14 @@ export function removeClass(el: Element, cls: string) {
     el.className = trim(curClass)
   }
 }
+
+export function getBoundingClientRect(element: Element): DOMRect | number {
+  if (!element || !element.getBoundingClientRect) {
+    return 0
+  }
+  return element.getBoundingClientRect()
+}
+
 /**
  * 获取当前元素的left、top偏移
  *   left：元素最左侧距离文档左侧的距离
@@ -115,19 +130,6 @@ export function getViewportOffset(element: Element): ViewportOffsetResult {
   }
 }
 
-export function hackCss(attr: string, value: string) {
-  const prefix: string[] = ['webkit', 'Moz', 'ms', 'OT']
-
-  const styleObj: any = {}
-  prefix.forEach((item) => {
-    styleObj[`${item}${upperFirst(attr)}`] = value
-  })
-  return {
-    ...styleObj,
-    [attr]: value
-  }
-}
-
 /* istanbul ignore next */
 export const on = function(
   element: HTMLElement | Document | Window,
@@ -148,4 +150,128 @@ export const off = function(
   if (element && event && handler) {
     element.removeEventListener(event, handler, false)
   }
+}
+
+/* istanbul ignore next */
+export const once = function(el: HTMLElement, event: string, fn: EventListener): void {
+  const listener = function(this: any, ...args: unknown[]) {
+    if (fn) {
+      fn.apply(this, args)
+    }
+    off(el, event, listener)
+  }
+  on(el, event, listener)
+}
+
+/* istanbul ignore next */
+export const getStyle = ieVersion < 9 ? function(element: Element | any, styleName: string) {
+  if (isServer) return
+  if (!element || !styleName) return null
+  styleName = camelCase(styleName)
+  if (styleName === 'float') {
+    styleName = 'styleFloat'
+  }
+  try {
+    switch (styleName) {
+    case 'opacity':
+      try {
+        return element.filters.item('alpha').opacity / 100
+      } catch (e) {
+        return 1.0
+      }
+    default:
+      return (element.style[styleName] || element.currentStyle ? element.currentStyle[styleName] : null)
+    }
+  } catch (e) {
+    return element.style[styleName]
+  }
+} : function(element: Element | any, styleName: string) {
+  if (isServer) return
+  if (!element || !styleName) return null
+  styleName = camelCase(styleName)
+  if (styleName === 'float') {
+    styleName = 'cssFloat'
+  }
+  try {
+    const computed = (document as any).defaultView.getComputedStyle(element, '')
+    return element.style[styleName] || computed ? computed[styleName] : null
+  } catch (e) {
+    return element.style[styleName]
+  }
+}
+
+/* istanbul ignore next */
+export function setStyle(element: Element | any, styleName: any, value: any) {
+  if (!element || !styleName) return
+
+  if (typeof styleName === 'object') {
+    for (const prop in styleName) {
+      if (Object.prototype.hasOwnProperty.call(styleName, prop)) {
+        setStyle(element, prop, styleName[prop])
+      }
+    }
+  } else {
+    styleName = camelCase(styleName)
+    if (styleName === 'opacity' && ieVersion < 9) {
+      element.style.filter = isNaN(value) ? '' : 'alpha(opacity=' + value * 100 + ')'
+    } else {
+      element.style[styleName] = value
+    }
+  }
+}
+
+/* istanbul ignore next */
+export const isScroll = (el: Element, vertical: any) => {
+  if (isServer) return
+
+  const determinedDirection = vertical !== null || vertical !== undefined
+  const overflow = determinedDirection
+    ? vertical
+      ? getStyle(el, 'overflow-y')
+      : getStyle(el, 'overflow-x')
+    : getStyle(el, 'overflow')
+
+  return overflow.match(/(scroll|auto)/)
+}
+
+/* istanbul ignore next */
+export const getScrollContainer = (el: Element, vertical?: any) => {
+  if (isServer) return
+
+  let parent: any = el
+  while (parent) {
+    if ([window, document, document.documentElement].includes(parent)) {
+      return window
+    }
+    if (isScroll(parent, vertical)) {
+      return parent
+    }
+    parent = parent.parentNode
+  }
+
+  return parent
+}
+
+/* istanbul ignore next */
+export const isInContainer = (el: Element, container: any) => {
+  if (isServer || !el || !container) return false
+
+  const elRect = el.getBoundingClientRect();
+  let containerRect
+
+  if ([window, document, document.documentElement, null, undefined].includes(container)) {
+    containerRect = {
+      top: 0,
+      right: window.innerWidth,
+      bottom: window.innerHeight,
+      left: 0
+    }
+  } else {
+    containerRect = container.getBoundingClientRect()
+  }
+
+  return elRect.top < containerRect.bottom &&
+    elRect.bottom > containerRect.top &&
+    elRect.right > containerRect.left &&
+    elRect.left < containerRect.right
 }

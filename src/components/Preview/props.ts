@@ -7,7 +7,7 @@ export const previewProps = {
   },
   zIndex: {
     type: Number as PropType<number>,
-    default: 2000
+    default: 100
   },
   show: {
     type: Boolean as PropType<boolean>,

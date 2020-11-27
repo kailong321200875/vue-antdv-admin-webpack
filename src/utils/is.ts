@@ -33,3 +33,11 @@ export const isFirefox = function() {
 export const isClient = () => {
   return typeof window !== 'undefined'
 }
+
+export const isObject = (val: any): val is Record<any, any> => {
+  return val !== null && is(val, 'Object')
+}
+
+export const isElement = (val: unknown): val is Element => {
+  return isObject(val) && !!val.tagName
+}

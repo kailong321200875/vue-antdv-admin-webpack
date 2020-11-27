@@ -9,13 +9,14 @@ let instance: any = null
 
 export function createImgPreview(options: Options) {
   if (!isClient) return
-  const { imageList, show = true, index = 0, onSelect = null, onClose = null } = options
+  const { imageList, show = true, index = 0, onSelect = null, onClose = null, zIndex = 500 } = options
 
   const propsData: Partial<Props> = {}
   const container = document.createElement('div')
   propsData.imageList = imageList
   propsData.show = show
   propsData.index = index
+  propsData.zIndex = zIndex
   propsData.onSelect = onSelect
   propsData.onClose = onClose
 

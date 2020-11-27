@@ -126,17 +126,17 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-  .app-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    margin-left: 10px;
-    .no-redirect {
-      color: #97a8be;
-      cursor: text;
-    }
-    .icon-breadcrumb {
-      color: #97a8be;
-      margin-right: 8px;
-    }
+.app-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 10px;
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
   }
+  .icon-breadcrumb {
+    color: #97a8be;
+    margin-right: 8px;
+  }
+}
 </style>

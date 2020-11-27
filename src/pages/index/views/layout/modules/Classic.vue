@@ -71,7 +71,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-@{deep} .ant-layout-header {
+@{deep}(.ant-layout-header) {
   line-height: @navbarHeight;
   height: @navbarHeight;
   position: fixed;

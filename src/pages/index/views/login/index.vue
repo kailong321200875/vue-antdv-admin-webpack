@@ -145,7 +145,7 @@ export default defineComponent({
     }
     .login-form {
       margin-top: 20px;
-      @{deep} .ant-form-item-control-wrapper {
+      @{deep}(.ant-form-item-control-wrapper) {
         width: 100%;
       }
     }

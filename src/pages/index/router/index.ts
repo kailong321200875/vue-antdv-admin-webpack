@@ -115,11 +115,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
+        path: 'image',
+        component: () => import('_p/index/views/components-demo/image/index.vue'),
+        name: 'ImageDemo',
+        meta: {
+          title: '图片'
+        }
+      },
+      {
         path: 'preview',
         component: () => import('_p/index/views/components-demo/preview/index.vue'),
         name: 'PreviewDemo',
         meta: {
           title: '图片预览'
+        }
+      },
+      {
+        path: 'scroll',
+        component: () => import('_p/index/views/components-demo/scroll/index.vue'),
+        name: 'ScrollDemo',
+        meta: {
+          title: '滚动'
         }
       }
     ]

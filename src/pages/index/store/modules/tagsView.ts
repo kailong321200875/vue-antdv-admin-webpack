@@ -7,8 +7,8 @@ export interface TagsViewState {
   cachedViews: string[]
 }
 
-@Module({ dynamic: true, namespaced: true, store, name: 'tagsView' })
-class App extends VuexModule implements TagsViewState {
+@Module({ dynamic: true, namespaced: true, name: 'tagsView', store })
+class TagsView extends VuexModule implements TagsViewState {
   public visitedViews = [] as any[]
   public cachedViews = [] as any[]
 
@@ -70,14 +70,14 @@ class App extends VuexModule implements TagsViewState {
   }
 
   @Mutation
-  private DEL_ALL_VISITED_VIEWS():void {
+  private DEL_ALL_VISITED_VIEWS(): void {
     // keep affix tags
     const affixTags = this.visitedViews.filter(tag => tag.meta.affix)
     this.visitedViews = affixTags
   }
 
   @Mutation
-  private DEL_ALL_CACHED_VIEWS():void {
+  private DEL_ALL_CACHED_VIEWS(): void {
     this.cachedViews = []
   }
 
@@ -197,4 +197,4 @@ class App extends VuexModule implements TagsViewState {
   }
 }
 
-export const tagsViewStore = getModule<App>(App)
+export const tagsViewStore = getModule<TagsView>(TagsView)

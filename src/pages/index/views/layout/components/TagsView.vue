@@ -145,7 +145,7 @@ export default defineComponent({
     }
 
     async function refreshSelectedTag(view: RouteLocationNormalizedLoaded) {
-      await tagsViewStore.updateVisitedView(view)
+      await tagsViewStore.delCachedView(view)
       const { fullPath } = view
       nextTick(() => {
         replace({
@@ -178,12 +178,15 @@ export default defineComponent({
 
     function toLastView(visitedViews: RouteLocationNormalizedLoaded[]) {
       const latestView = visitedViews.slice(-1)[0]
-      if (latestView) {
-        push(latestView)
-      } else {
-        // You can set another route
-        push('/')
-      }
+      console.log(latestView)
+      setTimeout(() => {
+        if (latestView) {
+          push(latestView)
+        } else {
+          // You can set another route
+          push('/')
+        }
+      }, 100)
     }
 
     function openMenu(tag: RouteLocationNormalizedLoaded, e: any) {
@@ -284,7 +287,7 @@ export default defineComponent({
     height: @tagsViewHeight;
     line-height: @tagsViewHeight;
     text-align: center;
-    @{deep} .ant-btn {
+    .ant-btn {
       width: @tagsViewHeight;
       height: @tagsViewHeight;
       line-height: @tagsViewHeight;
@@ -366,7 +369,7 @@ export default defineComponent({
     }
   }
 }
-@{deep} .scrollbar__view {
+@{deep}(.scrollbar__view) {
   height: @tagsViewHeight;
   line-height: @tagsViewHeight;
 }
