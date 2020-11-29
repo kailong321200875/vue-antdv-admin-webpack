@@ -256,7 +256,7 @@ export const getScrollContainer = (el: Element, vertical?: any) => {
 export const isInContainer = (el: Element, container: any) => {
   if (isServer || !el || !container) return false
 
-  const elRect = el.getBoundingClientRect();
+  const elRect = el.getBoundingClientRect()
   let containerRect
 
   if ([window, document, document.documentElement, null, undefined].includes(container)) {

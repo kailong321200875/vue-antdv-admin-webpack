@@ -6,19 +6,21 @@ import { AxiosPromise, ResponseType } from 'axios'
 
 const { default_headers } = config
 
-function get(params: any, url: string): AxiosPromise {
-  return request({
-    url: url,
-    method: 'get',
-    params
-  })
+interface Config {
+  params?: any
+  data?: any
+  url: string
+  method: 'get' | 'post' | 'delete' | 'put'
+  headersType?: string
+  responseType?: ResponseType
 }
 
-function post(params: any, url: string, headersType: string, responseType: ResponseType): AxiosPromise {
+function fetch({ url, method, params, data, headersType, responseType }: Config): AxiosPromise {
   return request({
     url: url,
-    method: 'post',
-    data: params,
+    method,
+    params,
+    data,
     responseType: responseType,
     headers: {
       'Content-Type': headersType || default_headers
@@ -27,6 +29,5 @@ function post(params: any, url: string, headersType: string, responseType: Respo
 }
 
 export {
-  get,
-  post
+  fetch
 }

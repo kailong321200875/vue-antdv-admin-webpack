@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-alert message="抽取于Element的Image组件进行改造，在保留原生img的特性下，支持懒加载，自定义占位、加载失败等。" style="margin-bottom: 20px;" />
+    <a-alert message="抽取于 Element 的 Image 组件进行改造，在保留原生img的特性下，支持懒加载，自定义占位、加载失败等。" style="margin-bottom: 20px;" />
     <div class="demo-image">
       <div v-for="fit in fits" :key="fit" class="block">
         <span class="demonstration">{{ fit }}</span>

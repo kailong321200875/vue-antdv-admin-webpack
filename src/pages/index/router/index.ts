@@ -137,6 +137,22 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '滚动'
         }
+      },
+      {
+        path: 'count-to',
+        component: () => import('_p/index/views/components-demo/count-to/index.vue'),
+        name: 'CountToDemo',
+        meta: {
+          title: '数字动画'
+        }
+      },
+      {
+        path: 'search',
+        component: () => import('_p/index/views/components-demo/search/index.vue'),
+        name: 'SearchDemo',
+        meta: {
+          title: '查询'
+        }
       }
     ]
   }
@@ -160,7 +176,7 @@ export function resetRouter(): void {
   router.getRoutes().forEach((route) => {
     const { name } = route
     if (name && !resetWhiteNameList.includes(name as string)) {
-      router.removeRoute(name)
+      router.hasRoute(name) && router.removeRoute(name)
     }
   })
 }

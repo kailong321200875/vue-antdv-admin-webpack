@@ -2,7 +2,7 @@
   <div
     ref="chartRef"
     :class="className"
-    :style="{height:height,width:width}"
+    :style="{height: height, width: width}"
   />
 </template>
 

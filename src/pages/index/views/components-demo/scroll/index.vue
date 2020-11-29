@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-alert message="抽取于Element的Scrollbar组件进行改造统一美化各个浏览器滚动条，保持一致性。" style="margin-bottom: 20px;" />
+    <a-alert message="抽取于 Element 的 Scrollbar 组件进行改造统一美化各个浏览器滚动条，保持一致性。" style="margin-bottom: 20px;" />
 
     <a-alert message="横向滚动，外围容器需要设置固定宽度。" style="margin-bottom: 20px;" />
     <div class="deom__wrap deom__wrap--horizontal">

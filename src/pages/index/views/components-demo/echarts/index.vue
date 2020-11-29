@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-alert message="统一封装Echart组件，自适应宽度，只需传入 options 与 height 属性即可展示对应的图表。" type="info" style="margin-bottom: 20px;" />
+    <a-alert message="统一封装 Echart 组件，自适应宽度，只需传入 options 与 height 属性即可展示对应的图表。" type="info" style="margin-bottom: 20px;" />
 
     <a-row :gutter="20">
       <a-col :span="10">

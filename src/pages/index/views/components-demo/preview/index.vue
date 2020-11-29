@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-alert message="抽取于Element的图片预览组件进行改造，实现函数式调用组件，无需基于图片进行点击预览。" style="margin-bottom: 20px;" />
+    <a-alert message="抽取于 Element 的图片预览组件进行改造，实现函数式调用组件，无需基于图片进行点击预览。" style="margin-bottom: 20px;" />
 
     <a-alert message="有底图预览" style="margin-bottom: 20px;" />
     <div class="img-wrap">

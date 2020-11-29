@@ -7,8 +7,10 @@ import antdvConfig from './antdv.config'
 const { message_top, message_duration, message_maxCount } = antdvConfig
 
 import {
+  ConfigProvider,
   Form,
   Input,
+  InputNumber,
   Button,
   Card,
   Layout,
@@ -18,7 +20,12 @@ import {
   Tooltip,
   Row,
   Col,
-  Alert
+  Alert,
+  Switch,
+  Select,
+  Radio,
+  TreeSelect,
+  DatePicker
 } from 'ant-design-vue'
 
 message.config({
@@ -28,9 +35,11 @@ message.config({
 })
 
 export function setupAntd(app: App<Element>): void {
+  app.use(ConfigProvider)
   app.use(Button)
   app.use(Form)
   app.use(Input)
+  app.use(InputNumber)
   app.use(Card)
   app.use(Layout)
   app.use(Menu)
@@ -39,6 +48,11 @@ export function setupAntd(app: App<Element>): void {
   app.use(Row)
   app.use(Col)
   app.use(Alert)
+  app.use(Switch)
+  app.use(Select)
+  app.use(Radio)
+  app.use(TreeSelect)
+  app.use(DatePicker)
 
   app.config.globalProperties.$message = message
 }

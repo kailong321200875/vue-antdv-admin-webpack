@@ -1,12 +1,17 @@
-import { get } from '../../axios-config/axios'
+import { fetch } from '../../axios-config/axios'
 
 import { AxiosPromise } from 'axios'
 
 import { EmptyObjFun } from '@/types/glob'
 
+interface PropsData {
+  params?: any
+  data?: any
+}
+
 const methods: EmptyObjFun = {
-  getList: function(parmas?: any): AxiosPromise {
-    return get(parmas, '/getJoke')
+  getList: function({ params }: PropsData): AxiosPromise {
+    return fetch({ url: '/getJoke', method: 'post', params })
   }
 }
 
