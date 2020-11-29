@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-alert message="封装 antdv 的 Form 组件，实现查询、重置等功能，并提供了三种风格。" style="margin-bottom: 20px;" />
+    <a-alert message="封装 antdv 的 Form 组件，实现查询、重置等功能，并提供了三种布局风格。" style="margin-bottom: 20px;" />
     <a-alert message="经典风格" style="margin-bottom: 20px;margin-top: 20px;" />
     <div class="searh">
       <search
@@ -80,7 +80,7 @@ export default defineComponent({
     }
 
     return {
-      classicData: ref<{[key: number]: any}>(classicData),
+      classicData,
       formData1, searchSubmit1, resetSubmit1,
       formData2, searchSubmit2, resetSubmit2,
       formData3, searchSubmit3, resetSubmit3
