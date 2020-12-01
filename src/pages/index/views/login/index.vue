@@ -48,6 +48,7 @@
             <a-button
               :loading="loading"
               size="large"
+              block
               type="primary"
               class="login--button"
               @click="login"
@@ -156,9 +157,6 @@ export default defineComponent({
       display: inline-block;
     }
     .form--input {
-      width: 100%;
-    }
-    .login--button {
       width: 100%;
     }
   }

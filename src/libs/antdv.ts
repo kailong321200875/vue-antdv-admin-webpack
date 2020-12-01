@@ -11,7 +11,7 @@ import {
   Form,
   Input,
   InputNumber,
-  Button,
+  // Button,
   Card,
   Layout,
   Menu,
@@ -36,7 +36,7 @@ message.config({
 
 export function setupAntd(app: App<Element>): void {
   app.use(ConfigProvider)
-  app.use(Button)
+  // app.use(Button)
   app.use(Form)
   app.use(Input)
   app.use(InputNumber)

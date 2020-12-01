@@ -153,6 +153,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '查询'
         }
+      },
+      {
+        path: 'button',
+        component: () => import('_p/index/views/components-demo/button/index.vue'),
+        name: 'ButtonDemo',
+        meta: {
+          title: '按钮'
+        }
       }
     ]
   }

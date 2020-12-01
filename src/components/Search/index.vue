@@ -186,7 +186,6 @@
             </a-button>
             <a-button
               v-if="showReset"
-              style="margin-left: 15px;"
               @click="resetForm"
             >
               <template #icon>

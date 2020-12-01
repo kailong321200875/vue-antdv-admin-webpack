@@ -25,6 +25,8 @@ import { setupAntd } from '@/libs/antdv' // antdv UI
 
 import { setupSvgIcon } from '@/assets/icons' // svg图标
 
+import { setupGlobCom } from '@/components'
+
 import '@/styles/reset.css' // 重置不同浏览器之间的标签默认样式
 
 import '@/styles/index.less'
@@ -38,6 +40,8 @@ setupStore(app) // 引入状态管理
 setupAntd(app) // 引入antdv组件
 
 setupSvgIcon(app) // 全局注册svgIcon组件
+
+setupGlobCom(app) // 注册全局公用组件
 
 router.isReady().then(() => {
   app.mount('#app')
