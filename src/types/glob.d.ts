@@ -12,10 +12,14 @@ declare type Nullable<T> = T | null
 
 // 任意对象
 declare interface IObj<T = any> {
-  [key: string]: T;
-  [key: number]: T;
+  [key: string]: T
+  [key: number]: T
 }
 
 declare type KeyString<T = any> = {
-  [key: string]: T;
+  [key: string]: T
+}
+
+declare interface Fn<T = any, R = T> {
+  (...arg: T[]): R
 }

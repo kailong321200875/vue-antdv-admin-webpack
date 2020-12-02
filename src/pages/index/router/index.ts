@@ -161,6 +161,52 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '按钮'
         }
+      },
+      {
+        path: 'watermark',
+        component: () => import('_p/index/views/directives-demo/watermark/index.vue'),
+        name: 'WatermarkDemo',
+        meta: {
+          title: '水印'
+        }
+      }
+    ]
+  },
+  {
+    path: '/directives-demo',
+    component: Layout,
+    redirect: '/directives-demo/clipboard',
+    name: 'DirectivesDemo',
+    meta: {
+      title: '自定义指令',
+      icon: 'clipboard',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'clipboard',
+        component: () => import('_p/index/views/directives-demo/clipboard/index.vue'),
+        name: 'ClipboardDemo',
+        meta: {
+          title: 'Clipboard'
+        }
+      }
+    ]
+  },
+  {
+    path: '/icon',
+    component: Layout,
+    name: 'IconsDemo',
+    meta: {},
+    children: [
+      {
+        path: 'index',
+        component: () => import('_p/index/views/icons/index.vue'),
+        name: 'Icons',
+        meta: {
+          title: '图标',
+          icon: 'icon'
+        }
       }
     ]
   }

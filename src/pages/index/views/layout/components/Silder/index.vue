@@ -128,13 +128,14 @@ export default defineComponent({
         }
       }
       if (hasOneShowingChild && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && route.meta && !route.meta.alwaysShow) {
-        return resolvePath('/', onlyOneChild.path)
+        return resolvePath(route.path, onlyOneChild.path)
       } else {
         return resolvePath('/', route.path)
       }
     }
 
     function handleMenuClick({ key }: any) {
+      console.log(key)
       if (isExternal(key)) {
         window.open(key)
       } else {
