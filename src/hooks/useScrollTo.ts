@@ -4,6 +4,7 @@ import { requestAnimationFrame } from '@/utils/animation'
 
 export interface ScrollToParams {
   el: HTMLElement
+  position: string
   to: number
   duration?: number
   callback?: () => any
@@ -17,16 +18,13 @@ const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
   t--
   return (-c / 2) * (t * (t - 2) - 1) + b
 }
-const move = (el: HTMLElement, amount: number) => {
-  el.scrollLeft = amount
+const move = (el: HTMLElement, position: string, amount: number) => {
+  el[position] = amount
 }
 
-const position = (el: HTMLElement) => {
-  return el.scrollLeft
-}
-export function useScrollTo({ el, to, duration = 500, callback }: ScrollToParams) {
+export function useScrollTo({ el, position = 'scrollLeft', to, duration = 500, callback }: ScrollToParams) {
   const isActiveRef = ref(false)
-  const start = position(el)
+  const start = el[position]
   const change = to - start
   const increment = 20
   let currentTime = 0
@@ -38,7 +36,7 @@ export function useScrollTo({ el, to, duration = 500, callback }: ScrollToParams
     }
     currentTime += increment
     const val = easeInOutQuad(currentTime, start, change, duration)
-    move(el, val)
+    move(el, position, val)
     if (currentTime < duration && unref(isActiveRef)) {
       requestAnimationFrame(animateScroll)
     } else {

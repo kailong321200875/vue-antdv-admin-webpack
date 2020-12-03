@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, ref, unref, nextTick } from 'vue'
 import Scrollbar from '_c/Scrollbar/index.vue'
-import { useScrollTo } from './hooks/useScrollTo'
+import { useScrollTo } from '@/hooks/useScrollTo'
 const tagAndTagSpacing = 4 // tagAndTagSpacing
 
 export default defineComponent({
@@ -63,6 +63,7 @@ export default defineComponent({
           nextTick(() => {
             const { start } = useScrollTo({
               el: $scrollWrapper,
+              position: 'scrollLeft',
               to: afterNextTagOffsetLeft - $containerWidth,
               duration: 500
             })
@@ -72,6 +73,7 @@ export default defineComponent({
           nextTick(() => {
             const { start } = useScrollTo({
               el: $scrollWrapper,
+              position: 'scrollLeft',
               to: beforePrevTagOffsetLeft,
               duration: 500
             })
@@ -86,6 +88,7 @@ export default defineComponent({
       nextTick(() => {
         const { start } = useScrollTo({
           el: $scrollWrapper,
+          position: 'scrollLeft',
           to: $scrollWrapper.scrollLeft + to,
           duration: 500
         })

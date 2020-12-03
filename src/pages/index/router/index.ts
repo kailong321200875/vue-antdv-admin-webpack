@@ -163,11 +163,11 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
-        path: 'watermark',
-        component: () => import('_p/index/views/directives-demo/watermark/index.vue'),
-        name: 'WatermarkDemo',
+        path: 'editor',
+        component: () => import('_p/index/views/components-demo/editor/index.vue'),
+        name: 'EditorDemo',
         meta: {
-          title: '水印'
+          title: '富文本编辑器'
         }
       }
     ]
@@ -189,6 +189,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'ClipboardDemo',
         meta: {
           title: 'Clipboard'
+        }
+      }
+    ]
+  },
+  {
+    path: '/hooks-demo',
+    component: Layout,
+    redirect: '/hooks-demo/watermark',
+    name: 'HooksDemo',
+    meta: {
+      title: 'Hooks',
+      icon: 'international',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'watermark',
+        component: () => import('_p/index/views/hooks-demo/useWatermark/index.vue'),
+        name: 'UseWatermarkDemo',
+        meta: {
+          title: 'UseWaterMark'
+        }
+      },
+      {
+        path: 'useScrollTo',
+        component: () => import('_p/index/views/hooks-demo/useScrollTo/index.vue'),
+        name: 'UseScrollToDemo',
+        meta: {
+          title: 'UseScrollTo'
         }
       }
     ]

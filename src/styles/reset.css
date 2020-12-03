@@ -87,7 +87,7 @@ input {
   padding: 0;
   border: 0;
   /* font-size: 100%; */
-  font-weight: normal;
+  /* font-weight: normal; */
   vertical-align: baseline;
 }
 
@@ -130,13 +130,13 @@ table {
 
 /* custom */
 a {
-  color: #7e8c8d;
-  text-decoration: none;
+  /* color: #7e8c8d; */
+  /* text-decoration: none; */
   -webkit-backface-visibility: hidden;
 }
 
 li {
-  list-style: none;
+  /* list-style: none; */
 }
 
 html,

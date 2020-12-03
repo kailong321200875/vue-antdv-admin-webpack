@@ -37,3 +37,16 @@ export function findIndex(ary: any, fn: Function): number {
   })
   return index
 }
+
+/**
+ * @param {String|Number} value 要验证的字符串或数值
+ * @param {*} validList 用来验证的列表
+ */
+export function oneOf(value: string | number, validList: string[] | number[]): boolean {
+  for (let i = 0; i < validList.length; i++) {
+    if (value === validList[i]) {
+      return true
+    }
+  }
+  return false
+}

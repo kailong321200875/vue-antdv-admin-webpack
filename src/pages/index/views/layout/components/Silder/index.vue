@@ -135,7 +135,6 @@ export default defineComponent({
     }
 
     function handleMenuClick({ key }: any) {
-      console.log(key)
       if (isExternal(key)) {
         window.open(key)
       } else {

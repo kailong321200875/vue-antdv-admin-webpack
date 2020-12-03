@@ -178,7 +178,6 @@ export default defineComponent({
 
     function toLastView(visitedViews: RouteLocationNormalizedLoaded[]) {
       const latestView = visitedViews.slice(-1)[0]
-      console.log(latestView)
       setTimeout(() => {
         if (latestView) {
           push(latestView)

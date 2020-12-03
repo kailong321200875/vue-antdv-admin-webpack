@@ -38,7 +38,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .icons-container {
-  margin: 10px 20px 0;
   overflow: hidden;
   background: #fff;
 
