@@ -86,7 +86,7 @@ export default defineComponent({
       editor.config.lineHeights = lineHeights
 
       // 代码高亮
-      editor.config.highlight = hljs
+      editor.highlight = hljs
 
       // 配置全屏
       editor.config.showFullScreen = showFullScreen
@@ -100,23 +100,24 @@ export default defineComponent({
 
       // 配置 onchange 回调函数
       editor.config.onchange = (html: string) => {
+        const text = editor.txt.text()
         emitFun(editor, html, 'change')
+        emit('update:value', props.valueType === 'html' ? html : text)
       }
       // 配置触发 onchange 的时间频率，默认为 200ms
       editor.config.onchangeTimeout = onchangeTimeout
 
       // 编辑区域 focus（聚焦）和 blur（失焦）时触发的回调函数。
-      // editor.config.onblur = (html: string) => {
-      //   emitFun(editor, html, 'blur')
-      // }
-      // editor.config.onfocus = (html: string) => {
-      //   emitFun(editor, html, 'focus')
-      // }
+      editor.config.onblur = (html: string) => {
+        emitFun(editor, html, 'blur')
+      }
+      editor.config.onfocus = (html: string) => {
+        emitFun(editor, html, 'focus')
+      }
     }
 
     function emitFun(editor: any, html: string, type: 'change' | 'focus' | 'blur'): void {
       const text = editor.txt.text()
-      emit('update:value', props.valueType === 'html' ? html : text)
       emit(type, props.valueType === 'html' ? html : text)
     }
 

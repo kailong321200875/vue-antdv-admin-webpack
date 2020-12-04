@@ -25,7 +25,9 @@ import {
   Select,
   Radio,
   TreeSelect,
-  DatePicker
+  DatePicker,
+  Table,
+  Spin
 } from 'ant-design-vue'
 
 message.config({
@@ -53,6 +55,8 @@ export function setupAntd(app: App<Element>): void {
   app.use(Radio)
   app.use(TreeSelect)
   app.use(DatePicker)
-
+  app.use(Table)
+  app.use(Spin)
+  
   app.config.globalProperties.$message = message
 }

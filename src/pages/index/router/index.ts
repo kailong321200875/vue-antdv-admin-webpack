@@ -169,6 +169,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '富文本编辑器'
         }
+      },
+      {
+        path: 'markdown',
+        component: () => import('_p/index/views/components-demo/markdown/index.vue'),
+        name: 'MarkdownDemo',
+        meta: {
+          title: 'markdown编辑器'
+        }
+      }
+    ]
+  },
+  {
+    path: '/table-demo',
+    component: Layout,
+    redirect: '/table-demo/basic-usage',
+    name: 'TableDemo',
+    meta: {
+      title: '表格',
+      icon: 'table',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'basic-usage',
+        component: () => import('_p/index/views/table-demo/basic-usage/index.vue'),
+        name: 'BasicUsage',
+        meta: {
+          title: '基础用法'
+        }
       }
     ]
   },
