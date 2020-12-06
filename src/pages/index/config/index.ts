@@ -49,7 +49,7 @@ const config: ConfigOptions = {
   /**
    * 接口成功返回状态码
    */
-  result_code: 2000,
+  result_code: 200,
 
   /**
    * 接口请求超时时间

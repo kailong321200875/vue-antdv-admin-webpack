@@ -1,15 +1,35 @@
 <template>
   <div>
     <com-table
-      :spinning="spinning"
+      :loading="loading"
       :columns="columns"
       :data-source="data"
     >
-      <!-- <template #name="{ text }">
+      <template #name="{ text }">
         <a>{{ text }}</a>
-      </template> -->
+      </template>
       <template #customTitle>
         <span><smile-outlined /> Name</span>
+      </template>
+      <template #tags="{ text: tags }">
+        <span>
+          <a-tag
+            v-for="tag in tags"
+            :key="tag"
+            :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+          >
+            {{ tag.toUpperCase() }}
+          </a-tag>
+        </span>
+      </template>
+      <template #action="{ record }">
+        <span>
+          <a>Invite -- {{ record.name }}</a>
+          <a-divider type="vertical" />
+          <a>Delete</a>
+          <a-divider type="vertical" />
+          <a class="ant-dropdown-link"> More actions <down-outlined /> </a>
+        </span>
       </template>
     </com-table>
   </div>
@@ -81,12 +101,12 @@ export default defineComponent({
     DownOutlined
   },
   setup() {
-    const spinning = ref<boolean>(true)
+    const loading = ref<boolean>(true)
     setTimeout(() => {
-      spinning.value = false
-    }, 3000)
+      loading.value = false
+    }, 1000)
     return {
-      spinning,
+      loading,
       columns,
       data
     }

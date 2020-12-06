@@ -1,76 +1,47 @@
 <template>
-  <a-spin :spinning="spinning" :tip="tip">
-    <a-table :data-source="dataSource">
-      <template v-for="item in columns">
-        <!-- 多级表头 -->
-        <template v-if="item.children && item.children.length"></template>
-        <template v-else>
-          <a-table-column
-            :key="item[item.key]"
-            :title="item.title"
-            :data-index="item.dataIndex"
-          >
-            <template #customTitle>
-              <slot name="customTitle" />
-            </template>
-            <!-- <template v-if="item.slots">
-              <template
-                v-for="slot in item.slots"
-              >
-                <template v-if="item.slot === 'customTitle'">
-                  <template #customTitle>
-                    <div :key="item.slots[slot]">
-                      <slot name="customTitle" />
-                    </div>
-                  </template>
-                </template>
-                <template v-else>
-                  <template #[slot]="{ text, record, index }">
-                    <div :key="item.slots[slot]">
-                      <slot :name="slot" :scoped="{ text, record, index }" />
-                    </div>
-                  </template>
-                </template>
-              </template>
-            </template> -->
-          </a-table-column>
-        </template>
-      </template>
-    </a-table>
-  </a-spin>
+  <a-table v-bind="getBindValue">
+    <table-item
+      v-for="item in columns"
+      :key="item.key || item.dataIndex"
+      :item="item"
+    />
+    <template v-if="slots.title" #title="currentPageData">
+      <slot name="title" :currentPageData="currentPageData" />
+    </template>
+    <!-- <template v-for="item in columns" :key="item.key || item.dataIndex"> -->
+
+    <!-- </template> -->
+    <template v-if="slots.footer" #footer="currentPageData">
+      <slot name="footer" :currentPageData="currentPageData" />
+    </template>
+  </a-table>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
+import TableItem from './TableItem.vue'
 export default defineComponent({
   name: 'ComTable',
+  components: {
+    TableItem
+  },
   props: {
-    spinning: {
-      type: Boolean as PropType<boolean>,
-      default: true
-    },
-    tip: {
-      type: String as PropType<string>,
-      default: '数据加载中...'
-    },
-    dataSource: {
-      type: Array as PropType<any[]>,
-      default: () => []
-    },
     columns: {
       type: Array as PropType<any[]>,
       default: () => []
     }
   },
-  setup(props, { attrs }) {
+  setup(props, { attrs, slots }) {
+    console.log(TableItem)
     const getBindValue = computed((): any => {
-      console.log(attrs)
-      console.log(props)
       const bindValue = { ...attrs, ...props }
+      delete bindValue.columns
       return bindValue
     })
+
     return {
-      getBindValue
+      getBindValue,
+      slots
     }
   }
 })

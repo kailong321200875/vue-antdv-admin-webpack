@@ -192,11 +192,75 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     },
     children: [
       {
+        path: 'test',
+        component: () => import('_p/index/views/table-demo/test/index.vue'),
+        name: 'test',
+        meta: {
+          title: 'test'
+        }
+      },
+      {
         path: 'basic-usage',
         component: () => import('_p/index/views/table-demo/basic-usage/index.vue'),
         name: 'BasicUsage',
         meta: {
           title: '基础用法'
+        }
+      },
+      {
+        path: 'table-ellipsis',
+        component: () => import('_p/index/views/table-demo/table-ellipsis/index.vue'),
+        name: 'TableEllipsis',
+        meta: {
+          title: '单元格自动省略'
+        }
+      },
+      {
+        path: 'table-load',
+        component: () => import('_p/index/views/table-demo/table-load/index.vue'),
+        name: 'TableLoad',
+        meta: {
+          title: '远程加载数据'
+        }
+      },
+      {
+        path: 'table-border',
+        component: () => import('_p/index/views/table-demo/table-border/index.vue'),
+        name: 'TableBorder',
+        meta: {
+          title: '带边框'
+        }
+      },
+      {
+        path: 'table-merge',
+        component: () => import('_p/index/views/table-demo/table-merge/index.vue'),
+        name: 'TableMerge',
+        meta: {
+          title: '表格行/列合并'
+        }
+      },
+      {
+        path: 'custom-menu',
+        component: () => import('_p/index/views/table-demo/custom-menu/index.vue'),
+        name: 'CustomMenu',
+        meta: {
+          title: '自定义筛选菜单'
+        }
+      },
+      {
+        path: 'edit-cell',
+        component: () => import('_p/index/views/table-demo/edit-cell/index.vue'),
+        name: 'EditCell',
+        meta: {
+          title: '可编辑单元格'
+        }
+      },
+      {
+        path: 'edit-row',
+        component: () => import('_p/index/views/table-demo/edit-row/index.vue'),
+        name: 'EditRow',
+        meta: {
+          title: '可编辑行'
         }
       }
     ]

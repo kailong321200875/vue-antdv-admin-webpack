@@ -27,7 +27,10 @@ import {
   TreeSelect,
   DatePicker,
   Table,
-  Spin
+  Spin,
+  Tag,
+  Divider,
+  Popconfirm
 } from 'ant-design-vue'
 
 message.config({
@@ -57,6 +60,9 @@ export function setupAntd(app: App<Element>): void {
   app.use(DatePicker)
   app.use(Table)
   app.use(Spin)
-  
+  app.use(Tag)
+  app.use(Divider)
+  app.use(Popconfirm)
+
   app.config.globalProperties.$message = message
 }

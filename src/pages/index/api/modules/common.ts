@@ -11,7 +11,7 @@ interface PropsData {
 
 const methods: EmptyObjFun = {
   getList: function({ params }: PropsData): AxiosPromise {
-    return fetch({ url: '/getJoke', method: 'post', params })
+    return fetch({ url: '/getJoke', method: 'get', params })
   }
 }
 
