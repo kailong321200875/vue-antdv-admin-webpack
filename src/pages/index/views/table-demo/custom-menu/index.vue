@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, getCurrentInstance } from 'vue'
-import ComTable from '_c/Table/index.vue'
+import ComTable from '_c/Table'
 import { SearchOutlined } from '@ant-design/icons-vue'
 
 const data = [

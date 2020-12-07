@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import ComTable from '_c/Table/index.vue'
+import ComTable from '_c/Table'
 import api from '_p/index/api'
 
 const columns = [
@@ -23,7 +23,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     sorter: true,
-    sortDirections: ['ascend', 'descend'],
+    // sortDirections: ['ascend', 'descend'],
     width: '20%',
     slots: { customRender: 'name' }
   },
@@ -57,6 +57,7 @@ export default defineComponent({
     })
 
     function handleTableChange(pagination: any, filters: any, sorter: any) {
+      console.log(sorter)
       const pager: any = { ...pagination }
       pager.current = pagination.current
       pagination.value = pager

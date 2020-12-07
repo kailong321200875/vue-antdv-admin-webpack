@@ -2,7 +2,7 @@
   <section class="app-main">
     <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in" appear>
-        <keep-alive :include="cachedViews">
+        <keep-alive :include="getCaches">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
       </transition>
@@ -13,12 +13,13 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { tagsViewStore } from '_p/index/store/modules/tagsView'
+import { useCache } from '_c/ParentView/useCache'
 export default defineComponent({
   name: 'AppMain',
   setup() {
-    const cachedViews = computed(() => tagsViewStore.cachedViews)
+    const { getCaches } = useCache(true)
     return {
-      cachedViews
+      getCaches
     }
   }
 })

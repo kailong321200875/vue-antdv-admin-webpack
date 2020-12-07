@@ -29,7 +29,6 @@
       <sidebar-item
         v-for="child in item.children"
         :key="resolvePath(basePath, child.path)"
-        :is-nest="true"
         :item="child"
         :active-menu-name="activeMenuName"
         :base-path="resolvePath(basePath, child.path)"

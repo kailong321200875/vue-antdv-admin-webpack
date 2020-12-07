@@ -6,27 +6,29 @@
       </a-button>
     </span>
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-      <router-link
-        v-for="tag in visitedViews"
-        :ref="setTagRef"
-        :key="tag.path"
-        :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        @click.middle="closeSelectedTag(tag)"
-        @contextmenu.prevent="openMenu(tag,$event)"
-      >
-        {{ tag.title }}
-        <CloseOutlined v-if="!tag.meta.affix" class="icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
+      <div>
+        <router-link
+          v-for="tag in visitedViews"
+          :ref="setTagRef"
+          :key="tag.path"
+          :class="isActive(tag) ? 'active' : ''"
+          :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+          tag="span"
+          class="tags-view-item"
+          @click.middle="closeSelectedTag(tag)"
+          @contextmenu.prevent="openMenu(tag, $event)"
+        >
+          {{ tag.title }}
+          <CloseOutlined v-if="!tag.meta.affix" class="icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        </router-link>
+      </div>
     </scroll-pane>
     <span class="move-btn next-btn">
       <a-button @click="move(200)">
         <template #icon><RightOutlined /></template>
       </a-button>
     </span>
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+    <ul v-show="visible" :style="{left: left + 'px', top: top + 'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">
         刷新
       </li>

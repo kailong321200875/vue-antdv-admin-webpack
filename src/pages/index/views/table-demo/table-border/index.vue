@@ -8,8 +8,8 @@
       <template #name="{ text }">
         <a>{{ text }}</a>
       </template>
-      <template #title="data">
-        Header{{ data }}
+      <template #title>
+        Header
       </template>
       <template #footer>
         Footer

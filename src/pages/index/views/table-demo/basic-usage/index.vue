@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import ComTable from '_c/Table/index.vue'
+import ComTable from '_c/Table'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 const columns = [

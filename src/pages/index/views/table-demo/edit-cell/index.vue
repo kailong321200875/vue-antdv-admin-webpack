@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import ComTable from '_c/Table/index.vue'
+import ComTable from '_c/Table'
 import EditableCell from './EditableCell.vue'
 export default defineComponent({
   // name: 'EditCell',

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { AppRouteRecordRaw } from './types'
 import type { App } from 'vue'
+import { getParentLayout } from './utils'
 
 /* Layout */
 const Layout = () => import('../views/layout/index.vue')
@@ -180,91 +181,115 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       }
     ]
   },
-  {
-    path: '/table-demo',
-    component: Layout,
-    redirect: '/table-demo/basic-usage',
-    name: 'TableDemo',
-    meta: {
-      title: '表格',
-      icon: 'table',
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: 'test',
-        component: () => import('_p/index/views/table-demo/test/index.vue'),
-        name: 'test',
-        meta: {
-          title: 'test'
-        }
-      },
-      {
-        path: 'basic-usage',
-        component: () => import('_p/index/views/table-demo/basic-usage/index.vue'),
-        name: 'BasicUsage',
-        meta: {
-          title: '基础用法'
-        }
-      },
-      {
-        path: 'table-ellipsis',
-        component: () => import('_p/index/views/table-demo/table-ellipsis/index.vue'),
-        name: 'TableEllipsis',
-        meta: {
-          title: '单元格自动省略'
-        }
-      },
-      {
-        path: 'table-load',
-        component: () => import('_p/index/views/table-demo/table-load/index.vue'),
-        name: 'TableLoad',
-        meta: {
-          title: '远程加载数据'
-        }
-      },
-      {
-        path: 'table-border',
-        component: () => import('_p/index/views/table-demo/table-border/index.vue'),
-        name: 'TableBorder',
-        meta: {
-          title: '带边框'
-        }
-      },
-      {
-        path: 'table-merge',
-        component: () => import('_p/index/views/table-demo/table-merge/index.vue'),
-        name: 'TableMerge',
-        meta: {
-          title: '表格行/列合并'
-        }
-      },
-      {
-        path: 'custom-menu',
-        component: () => import('_p/index/views/table-demo/custom-menu/index.vue'),
-        name: 'CustomMenu',
-        meta: {
-          title: '自定义筛选菜单'
-        }
-      },
-      {
-        path: 'edit-cell',
-        component: () => import('_p/index/views/table-demo/edit-cell/index.vue'),
-        name: 'EditCell',
-        meta: {
-          title: '可编辑单元格'
-        }
-      },
-      {
-        path: 'edit-row',
-        component: () => import('_p/index/views/table-demo/edit-row/index.vue'),
-        name: 'EditRow',
-        meta: {
-          title: '可编辑行'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/table-demo',
+  //   component: Layout,
+  //   redirect: '/table-demo/basic-usage',
+  //   name: 'TableDemo',
+  //   meta: {
+  //     title: '表格',
+  //     icon: 'table',
+  //     alwaysShow: true
+  //   },
+  //   children: [
+  //     // {
+  //     //   path: 'test',
+  //     //   component: () => import('_p/index/views/table-demo/test'),
+  //     //   name: 'test',
+  //     //   meta: {
+  //     //     title: 'test'
+  //     //   }
+  //     // },
+  //     {
+  //       path: 'basic-usage',
+  //       component: () => import('_p/index/views/table-demo/basic-usage/index.vue'),
+  //       name: 'BasicUsage',
+  //       meta: {
+  //         title: '基础用法'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-ellipsis',
+  //       component: () => import('_p/index/views/table-demo/table-ellipsis/index.vue'),
+  //       name: 'TableEllipsis',
+  //       meta: {
+  //         title: '单元格自动省略'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-load',
+  //       component: () => import('_p/index/views/table-demo/table-load/index.vue'),
+  //       name: 'TableLoad',
+  //       meta: {
+  //         title: '远程加载数据'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-border',
+  //       component: () => import('_p/index/views/table-demo/table-border/index.vue'),
+  //       name: 'TableBorder',
+  //       meta: {
+  //         title: '带边框'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-merge',
+  //       component: () => import('_p/index/views/table-demo/table-merge/index.vue'),
+  //       name: 'TableMerge',
+  //       meta: {
+  //         title: '表格行/列合并'
+  //       }
+  //     },
+  //     {
+  //       path: 'custom-menu',
+  //       component: () => import('_p/index/views/table-demo/custom-menu/index.vue'),
+  //       name: 'CustomMenu',
+  //       meta: {
+  //         title: '自定义筛选菜单'
+  //       }
+  //     },
+  //     {
+  //       path: 'edit-cell',
+  //       component: () => import('_p/index/views/table-demo/edit-cell/index.vue'),
+  //       name: 'EditCell',
+  //       meta: {
+  //         title: '可编辑单元格'
+  //       }
+  //     },
+  //     {
+  //       path: 'edit-row',
+  //       component: () => import('_p/index/views/table-demo/edit-row/index.vue'),
+  //       name: 'EditRow',
+  //       meta: {
+  //         title: '可编辑行'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-tree',
+  //       component: () => import('_p/index/views/table-demo/table-tree/index.vue'),
+  //       name: 'TableTree',
+  //       meta: {
+  //         title: '树形数据展示'
+  //       }
+  //     },
+  //     {
+  //       path: 'table-expanded',
+  //       component: () => import('_p/index/views/table-demo/table-expanded/index.vue'),
+  //       name: 'TableExpanded',
+  //       meta: {
+  //         title: '可展开'
+  //       }
+  //     },
+  //     {
+  //       path: 'fixed-header',
+  //       component: () => import('_p/index/views/table-demo/fixed-header/index.vue'),
+  //       name: 'FixedHeader',
+  //       meta: {
+  //         title: '固定头和列'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/directives-demo',
     component: Layout,
@@ -328,6 +353,63 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '图标',
           icon: 'icon'
+        }
+      }
+    ]
+  },
+  {
+    path: '/level',
+    component: Layout,
+    redirect: '/level/menu1/menu1-1',
+    name: 'Level',
+    meta: {
+      title: '多级菜单缓存',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'menu1',
+        name: 'Menu1Demo',
+        component: getParentLayout('Menu1Demo'),
+        meta: {
+          title: 'Menu1'
+        },
+        children: [
+          {
+            path: 'menu1-1',
+            name: 'Menu11Demo',
+            component: getParentLayout('Menu11Demo'),
+            meta: {
+              title: 'Menu1-1',
+              alwaysShow: true
+            },
+            children: [
+              {
+                path: 'menu1-1-1',
+                name: 'Menu111Demo',
+                component: () => import('_p/index/views/level/Menu111.vue'),
+                meta: {
+                  title: 'Menu1-1-1'
+                }
+              }
+            ]
+          },
+          {
+            path: 'menu1-2',
+            name: 'Menu12Demo',
+            component: () => import('_p/index/views/level/Menu12.vue'),
+            meta: {
+              title: 'Menu1-2'
+            }
+          }
+        ]
+      },
+      {
+        path: 'menu2',
+        name: 'Menu2Demo',
+        component: () => import('_p/index/views/level/Menu2.vue'),
+        meta: {
+          title: 'Menu2'
         }
       }
     ]

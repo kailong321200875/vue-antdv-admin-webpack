@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue'
-import ComTable from '_c/Table/index.vue'
+import ComTable from '_c/Table'
 
 const renderContent = ({ text, index }: any) => {
   const obj: any = {

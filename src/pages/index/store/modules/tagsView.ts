@@ -1,16 +1,19 @@
 import store from '../index'
 import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import { getRoute } from '_p/index/router/utils'
+
+export const PAGE_LAYOUT_KEY = '__PAGE_LAYOUT__'
 
 export interface TagsViewState {
   visitedViews: RouteLocationNormalizedLoaded[]
-  cachedViews: string[]
+  cachedViews: Map<string, string[]>
 }
 
 @Module({ dynamic: true, namespaced: true, name: 'tagsView', store })
 class TagsView extends VuexModule implements TagsViewState {
   public visitedViews = [] as any[]
-  public cachedViews = [] as any[]
+  public cachedViews = new Map<string, string[]>()
 
   @Mutation
   private ADD_VISITED_VIEW(view: RouteLocationNormalizedLoaded): void {
@@ -23,11 +26,51 @@ class TagsView extends VuexModule implements TagsViewState {
   }
 
   @Mutation
-  private ADD_CACHED_VIEW(view: RouteLocationNormalizedLoaded | any): void {
-    if (this.cachedViews.includes(view.name)) return
-    if (!view.meta.noCache) {
-      this.cachedViews.push(view.name)
-    }
+  private SET_CACHED_VIEW(view: RouteLocationNormalizedLoaded | any): void {
+    const cacheMap = new Map<string, string[]>();
+    
+    const pageCacheSet = new Set<string>();
+    this.visitedViews.forEach((tab) => {
+      const item = getRoute(tab);
+      const needCache = !item.meta?.noCache;
+      if (!needCache) return;
+    
+      if (item.meta?.affix) {
+        const name = item.name as string;
+        pageCacheSet.add(name);
+      } else if (item.matched && needCache) {
+        const matched = item.matched;
+        const len = matched.length;
+    
+        if (len < 2) return;
+    
+        for (let i = 0; i < matched.length; i++) {
+          const key = matched[i].name as string;
+    
+          if (i < 2) {
+            pageCacheSet.add(key);
+          }
+          if (i < len - 1) {
+            const { meta, name } = matched[i + 1];
+            if (meta && (meta.affix || needCache)) {
+              const mapList = cacheMap.get(key) || [];
+              if (!mapList.includes(name as string)) {
+                mapList.push(name as string);
+              }
+              cacheMap.set(key, mapList);
+            }
+          }
+        }
+      }
+    });
+    
+    cacheMap.set(PAGE_LAYOUT_KEY, Array.from(pageCacheSet));
+    this.cachedViews = cacheMap;
+    console.log(this.cachedViews)
+    // if (this.cachedViews.includes(view.name)) return
+    // if (!view.meta.noCache) {
+    //   this.cachedViews.push(view.name)
+    // }
   }
 
   @Mutation
@@ -42,13 +85,14 @@ class TagsView extends VuexModule implements TagsViewState {
 
   @Mutation
   private DEL_CACHED_VIEW(view: RouteLocationNormalizedLoaded): void {
-    for (const i of this.cachedViews) {
-      if (i === view.name) {
-        const index = this.cachedViews.indexOf(i)
-        this.cachedViews.splice(index, 1)
-        break
-      }
-    }
+    this.SET_CACHED_VIEW(view)
+    // for (const i of this.cachedViews) {
+    //   if (i === view.name) {
+    //     const index = this.cachedViews.indexOf(i)
+    //     this.cachedViews.splice(index, 1)
+    //     break
+    //   }
+    // }
   }
 
   @Mutation
@@ -60,13 +104,14 @@ class TagsView extends VuexModule implements TagsViewState {
 
   @Mutation
   private DEL_OTHERS_CACHED_VIEWS(view: RouteLocationNormalizedLoaded): void {
-    for (const i of this.cachedViews) {
-      if (i === view.name) {
-        const index = this.cachedViews.indexOf(i)
-        this.cachedViews = this.cachedViews.slice(index, index + 1)
-        break
-      }
-    }
+    this.SET_CACHED_VIEW(view)
+    // for (const i of this.cachedViews) {
+    //   if (i === view.name) {
+    //     const index = this.cachedViews.indexOf(i)
+    //     this.cachedViews = this.cachedViews.slice(index, index + 1)
+    //     break
+    //   }
+    // }
   }
 
   @Mutation
@@ -78,7 +123,7 @@ class TagsView extends VuexModule implements TagsViewState {
 
   @Mutation
   private DEL_ALL_CACHED_VIEWS(): void {
-    this.cachedViews = []
+    this.cachedViews = new Map()
   }
 
   @Mutation
@@ -104,7 +149,7 @@ class TagsView extends VuexModule implements TagsViewState {
 
   @Action
   public addCachedView(view: RouteLocationNormalizedLoaded): void {
-    this.ADD_CACHED_VIEW(view)
+    this.SET_CACHED_VIEW(view)
   }
 
   @Action
@@ -158,7 +203,7 @@ class TagsView extends VuexModule implements TagsViewState {
   @Action
   public delOthersCachedViews(view: RouteLocationNormalizedLoaded): Promise<unknown> {
     return new Promise(resolve => {
-      this.DEL_OTHERS_CACHED_VIEWS(view)
+      this.SET_CACHED_VIEW(view)
       resolve([...this.cachedViews])
     })
   }
