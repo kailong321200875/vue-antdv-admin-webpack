@@ -147,7 +147,7 @@ export default defineComponent({
     }
 
     async function refreshSelectedTag(view: RouteLocationNormalizedLoaded) {
-      await tagsViewStore.delCachedView(view)
+      await tagsViewStore.delCachedView()
       const { fullPath } = view
       nextTick(() => {
         replace({

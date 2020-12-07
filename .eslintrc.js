@@ -247,7 +247,7 @@ module.exports = {
         args: 'none'
       }
     ],
-    'no-useless-call': 2,
+    'no-useless-call': 0,
     'no-useless-computed-key': 2,
     'no-useless-constructor': 2,
     'no-useless-escape': 0,

@@ -16,6 +16,7 @@
     <a-sub-menu
       v-else
       :key="resolvePath(basePath, item.path)"
+      v-bind="$attrs"
       :class="highlightMenu(theme + '-active-item')"
       :popup-class-name="highlightMenu(theme + '-popup-active-item')"
     >

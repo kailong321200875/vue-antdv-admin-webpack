@@ -1,43 +1,22 @@
-<template>
-  <div :class="{'has-logo':show_logo}" class="sidebar-container">
-    <scrollbar class="menu-wrap">
-      <a-menu
-        v-model:selectedKeys="selectedKeys"
-        v-model:openKeys="openKeys"
-        :theme="theme"
-        :mode="mode"
-        @click="handleMenuClick"
-        @openChange="openChange"
-      >
-        <sidebar-item
-          v-for="route in routers"
-          :key="filterPath(route)"
-          :item="route"
-          :base-path="route.path"
-          :active-menu-name="activeMenuName"
-          :theme="theme"
-        />
-      </a-menu>
-    </scrollbar>
-  </div>
-</template>
-
-<script lang="ts">
 import { ref, defineComponent, PropType, computed, watch } from 'vue'
+import { Menu } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
 import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 import Scrollbar from '_c/Scrollbar/index.vue'
-import SidebarItem from './SidebarItem.vue'
+import Item from './Item.vue'
 import { permissionStore } from '_p/index/store/modules/permission'
 import { setSidebarItem } from './hooks/setSidebarItem'
 import { isExternal } from '@/utils/validate'
 import config from '_p/index/config'
 const { show_logo } = config
+
+import './index.less'
+
 export default defineComponent({
-  name: 'Slider',
+  name: 'Silder',
   components: {
     Scrollbar,
-    SidebarItem
+    Item
   },
   props: {
     collapsed: {
@@ -70,7 +49,7 @@ export default defineComponent({
     const selectedKeys = ref<string[]>([])
     const openKeys = ref<string[]>([])
     const activeMenuName = ref<string>('')
-
+    
     watch(
       () => currentRoute.value,
       (route: RouteLocationNormalizedLoaded) => {
@@ -80,7 +59,7 @@ export default defineComponent({
         immediate: true
       }
     )
-
+    
     watch(
       () => props.collapsed,
       (collapsed: boolean) => {
@@ -90,13 +69,13 @@ export default defineComponent({
         immediate: true
       }
     )
-
+    
     function setOpenKeys(route: RouteLocationNormalizedLoaded, collapsed: boolean) {
       const parentRoute: RouteRecordRaw[] = treeFindRouter(permissionStore.routers, (data: any) => data.name === route.name && data.path !== route.path)
       openKeys.value = collapsed ? [] : getFullPath(parentRoute.map((v: RouteRecordRaw) => v.path))
       console.log(openKeys.value)
     }
-
+    
     function setSelectedKeys(route: RouteLocationNormalizedLoaded) {
       const { meta, path, name } = route
       activeMenuName.value = name as string
@@ -106,7 +85,7 @@ export default defineComponent({
       }
       selectedKeys.value = [path]
     }
-
+    
     function filterPath(route: RouteRecordRaw): string {
       let onlyOneChild: any = null
       let hasOneShowingChild = false
@@ -135,7 +114,7 @@ export default defineComponent({
         return resolvePath('/', route.path)
       }
     }
-
+    
     function handleMenuClick({ key }: any) {
       console.log(key)
       if (isExternal(key)) {
@@ -144,32 +123,55 @@ export default defineComponent({
         push({ path: key })
       }
     }
-
-    function openChange(openKeys: string) {
-      console.log(openKeys)
+    
+    function renderMenu(routers) {
+      return routers.map((item: RouteRecordRaw) => {
+        if (!item.meta.hidden) {
+          if (hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.meta.alwaysShow) {
+            return (
+              <Menu.Item key={item.path}>
+                {() => [
+                  <Item
+                    icon={item.meta && item.meta.icon}
+                    title={item.meta.title}
+                  />
+                ]}
+              </Menu.Item>
+            )
+          } else {
+            return (
+              <Menu.SubMenu key={item.path} v-slots={{
+                title: () => [
+                  <Item
+                    icon={item.meta && item.meta.icon}
+                    title={item.meta.title}
+                  />
+                ],
+                default: () => renderMenu(item.children)
+              }}>
+              </Menu.SubMenu>
+            )
+          }
+        }
+      })
     }
-
-    return {
-      activeMenuName,
-      selectedKeys, openKeys, routers,
-      onlyOneChild, hasOneShowingChild, resolvePath,
-      filterPath,
-      show_logo,
-      handleMenuClick, openChange
+    
+    return () => {
+      return (
+        <div class={'has-logo':show_logo} class="sidebar-container">
+          <scrollbar class="menu-wrap">
+            <Menu
+              selectedKeys={selectedKeys}
+              openKeys={openKeys}
+              theme={props.theme}
+              mode={props.mode}
+              onClick={handleMenuClick}
+            >
+              {renderMenu(routers)}
+            </Menu>
+          </scrollbar>
+        </div>
+      )
     }
   }
 })
-</script>
-
-<style lang="less" scoped>
-.sidebar-container {
-  height: 100%;
-}
-.has-logo {
-  height: calc(~"100% - @{topSilderHeight}");
-}
-.menu-wrap {
-  height: 100%;
-  overflow: hidden;
-}
-</style>

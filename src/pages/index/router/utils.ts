@@ -18,10 +18,10 @@ export function getRoute(route: RouteLocationNormalized): RouteLocationNormalize
     ...opt,
     matched: (matched
       ? matched.map((item) => ({
-          meta: item.meta,
-          name: item.name,
-          path: item.path
-        }))
+        meta: item.meta,
+        name: item.name,
+        path: item.path
+      }))
       : undefined) as RouteRecordNormalized[]
   }
 }

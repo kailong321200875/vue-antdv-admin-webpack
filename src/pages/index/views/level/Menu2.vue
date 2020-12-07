@@ -1,10 +1,10 @@
 <template>
-  <div>
-    多层级缓存-页面2
-    <br />
-    <input />
+  <div style="padding: 20px; background: #fff;display: flex;align-items: center;">
+    <div style="min-width: 200px;">多层级缓存-页面2：</div>
+    <a-input />
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({

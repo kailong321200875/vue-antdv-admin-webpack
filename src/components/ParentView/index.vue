@@ -10,7 +10,7 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, unref } from 'vue'
+import { defineComponent } from 'vue'
 
 import { useCache } from './useCache'
 

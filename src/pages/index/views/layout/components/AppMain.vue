@@ -11,8 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { tagsViewStore } from '_p/index/store/modules/tagsView'
+import { defineComponent } from 'vue'
 import { useCache } from '_c/ParentView/useCache'
 export default defineComponent({
   name: 'AppMain',

@@ -1,9 +1,9 @@
-import path from 'path'
+// import path from 'path'
 import { asyncRouterMap, constantRouterMap } from '_p/index/router'
 import { deepClone } from '@/utils'
 import store from '../index'
 import { VuexModule, getModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { AppRouteRecordRaw, RouteMeta } from '_p/index/router/types'
+import { AppRouteRecordRaw } from '_p/index/router/types'
 
 export interface PermissionState {
   routers: AppRouteRecordRaw[]
