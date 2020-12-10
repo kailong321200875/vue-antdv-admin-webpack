@@ -30,7 +30,8 @@ import {
   Spin,
   Tag,
   Divider,
-  Popconfirm
+  Popconfirm,
+  Breadcrumb
 } from 'ant-design-vue'
 
 message.config({
@@ -63,6 +64,7 @@ export function setupAntd(app: App<Element>): void {
   app.use(Tag)
   app.use(Divider)
   app.use(Popconfirm)
+  app.use(Breadcrumb)
 
   app.config.globalProperties.$message = message
 }

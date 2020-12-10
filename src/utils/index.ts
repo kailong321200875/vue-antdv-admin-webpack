@@ -50,3 +50,36 @@ export function oneOf(value: string | number, validList: string[] | number[]): b
   }
   return false
 }
+
+/**
+ * 生成随机字符串
+ */
+export function toAnyString() {
+  const str: string = 'xxxxx-xxxxx-4xxxx-yxxxx-xxxxx'.replace(/[xy]/g, (c: string) => {
+    const r: number = Math.random() * 16 | 0
+    const v: number = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString()
+  })
+  return str
+}
+
+/**
+ * 截取URL参数
+ * @param {string} url
+ * @returns {Object}
+ */
+export function param2Obj(url: string) {
+  const search: string = url.split('?')[1]
+  if (!search) {
+    return {}
+  }
+  return JSON.parse(
+    '{"' +
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"')
+        .replace(/\+/g, ' ') +
+      '"}'
+  )
+}

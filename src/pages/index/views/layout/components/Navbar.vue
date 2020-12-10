@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger :collapsed="collapsed" class="hamburger-container" @toggleClick="setCollapsed" />
-    <!-- <breadcrumb class="breadcrumb-container" /> -->
+    <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <screenfull class="right-menu-item hover-effect" />

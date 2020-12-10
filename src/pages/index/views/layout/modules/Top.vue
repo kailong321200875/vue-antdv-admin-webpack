@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import Logo from '../components/Logo.vue'
-import Silder from '../components/Silder/index.vue'
+import Silder from '../components/Silder'
 import UserInfo from '../components/UserInfo.vue'
 import TagsView from '../components/TagsView.vue'
 import AppMain from '../components/AppMain.vue'

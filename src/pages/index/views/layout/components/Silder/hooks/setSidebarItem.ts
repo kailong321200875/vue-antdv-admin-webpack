@@ -65,11 +65,28 @@ export function setSidebarItem() {
     return result
   }
 
+  function findCurrentRoute(routers: RouteRecordRaw[], path: string, basePath = '/', result: Array<any> = []): any {
+    for (const item of routers) {
+      if (!item.meta?.hidden) {
+        const _basePath = resolvePath(basePath, item.path)
+        if (_basePath === path && !item.children) {
+          result.push(item)
+        } else {
+          if (item.children) {
+            findCurrentRoute(item.children, path, _basePath, result)
+          }
+        }
+      }
+    }
+    return result ? result[0] : null
+  }
+
   return {
     onlyOneChild,
     hasOneShowingChild,
     resolvePath,
     treeFindRouter,
-    getFullPath
+    getFullPath,
+    findCurrentRoute
   }
 }

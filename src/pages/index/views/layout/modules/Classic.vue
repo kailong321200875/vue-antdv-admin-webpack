@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue'
 import { appStore } from '_p/index/store/modules/app'
-import Silder from '../components/Silder/index.vue'
+import Silder from '../components/Silder'
 import Navbar from '../components/Navbar.vue'
 import AppMain from '../components/AppMain.vue'
 import TagsView from '../components/TagsView.vue'

@@ -19,10 +19,9 @@
 
 <script lang="ts">
 import { ref, defineComponent, watch } from 'vue'
-import type { RouteRecordRaw, RouteLocationMatched } from 'vue-router'
+import type { RouteRecordRaw, RouteLocationMatched, RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { compile } from 'path-to-regexp'
-import { permissionStore } from '_p/index/store/modules/permission'
 import Breadcrumb from './Breadcrumb.vue'
 import BreadcrumbItem from './BreadcrumbItem.vue'
 export default defineComponent({
@@ -36,60 +35,23 @@ export default defineComponent({
 
     const levelList = ref<RouteRecordRaw[]>([])
 
-    const addRouters = permissionStore.addRouters
+    function getBreadcrumb() {
+      let matched: any[] = currentRoute.value.matched.filter((item: RouteLocationMatched) => item.meta && item.meta.title)
+      const first = matched[0]
 
-    function getBreadcrumbRoutes(route: any): RouteRecordRaw[] {
-      let currentRoutes: RouteRecordRaw[] = []
-      const first: RouteLocationMatched = route.matched[0]
-      let last: RouteLocationMatched = route.matched[route.matched.length - 1]
-      const matched: RouteLocationMatched[] = []
-
-      // 倒序遍历有meta.parent标识的路由
-      for (let i = route.matched.length - 1; i >= 0; i--) {
-        const match: RouteLocationMatched = route.matched[i]
-        const meta: any = match.meta || {}
-        matched.unshift(match)
-        if (meta.parent) {
-          last = match
-          break
-        }
+      if (!isDashboard(first)) {
+        matched = [{ path: '/dashboard', meta: { title: '首页', icon: 'dashboard' }}].concat(matched)
       }
 
-      // 填充降级后缺失的各级路由
-      addRouters.some((item: RouteRecordRaw) => {
-        if (item.path === first.path) {
-          currentRoutes = item.children || []
-          getParentRoute(currentRoutes, last, matched)
-          return true
-        }
-      })
-      matched.unshift(first)
-      return matched
+      levelList.value = matched.filter((item: RouteLocationMatched) => item.meta && item.meta.title && item.meta.breadcrumb !== false)
     }
 
-    function getParentRoute(currentRoutes: RouteRecordRaw[], last: RouteRecordRaw, matched: RouteRecordRaw[] = []): RouteRecordRaw[] {
-      const meta: any = last.meta || {}
-      currentRoutes.forEach((item: RouteRecordRaw) => {
-        if (item.path === meta.parent) {
-          matched.unshift(item)
-          getParentRoute(currentRoutes, item, matched)
-        }
-      })
-      return matched
-    }
-
-    function getBreadcrumb(): void {
-      const matched: RouteRecordRaw[] = getBreadcrumbRoutes(currentRoute.value).filter((item: RouteRecordRaw) => item.meta && item.meta.title)
-      // const first: RouteRecordRaw = matched[0]
-      // if (first && first.name !== 'Dashboard') {
-      //   matched = [
-      //     {
-      //       path: '/dashboard',
-      //       meta: { title: '首页', icon: 'dashboard' }
-      //     }
-      //   ].concat(matched)
-      // }
-      levelList.value = matched.filter((item: RouteRecordRaw) => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+    function isDashboard(route: RouteLocationMatched) {
+      const name = route && route.name
+      if (!name) {
+        return false
+      }
+      return (name as any).trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
     }
 
     function pathCompile(path: string): string {
@@ -109,7 +71,10 @@ export default defineComponent({
 
     watch(
       () => currentRoute.value,
-      () => {
+      (route: RouteLocationNormalizedLoaded) => {
+        if (route.path.startsWith('/redirect/')) {
+          return
+        }
         getBreadcrumb()
       },
       {

@@ -360,7 +360,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/level',
     component: Layout,
-    redirect: '/level/menu1/menu1-1',
+    redirect: '/level/menu1/menu1-1/menu1-1-1',
     name: 'Level',
     meta: {
       title: '多级菜单缓存',
@@ -371,6 +371,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         path: 'menu1',
         name: 'Menu1Demo',
         component: getParentLayout('Menu1Demo'),
+        redirect: '/level/menu1/menu1-1/menu1-1-1',
         meta: {
           title: 'Menu1'
         },
@@ -379,6 +380,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             path: 'menu1-1',
             name: 'Menu11Demo',
             component: getParentLayout('Menu11Demo'),
+            redirect: '/level/menu1/menu1-1/menu1-1-1',
             meta: {
               title: 'Menu1-1',
               alwaysShow: true
@@ -410,6 +412,26 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('_p/index/views/level/Menu2.vue'),
         meta: {
           title: 'Menu2'
+        }
+      }
+    ]
+  },
+  {
+    path: '/example-demo',
+    component: Layout,
+    name: 'ExampleDemo',
+    meta: {
+      alwaysShow: true,
+      icon: 'example',
+      title: '综合实例'
+    },
+    children: [
+      {
+        path: 'example',
+        component: () => import('_p/index/views/example-demo/example/index.vue'),
+        name: 'Example',
+        meta: {
+          title: '列表综合实例'
         }
       }
     ]
